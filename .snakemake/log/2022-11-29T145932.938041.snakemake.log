@@ -1,0 +1,22 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Job stats:
+job               count    min threads    max threads
+--------------  -------  -------------  -------------
+assemble_raven        1              1              1
+total                 1              1              1
+
+Select jobs to execute...
+
+[Tue Nov 29 14:59:33 2022]
+Job 0: 
+        Assembling EC2D2/read_subsets/sample_06.fastq with raven.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_06.fasta
+
+[Tue Nov 29 14:59:38 2022]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: .snakemake/log/2022-11-29T145932.938041.snakemake.log

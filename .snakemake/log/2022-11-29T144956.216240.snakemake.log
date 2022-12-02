@@ -1,0 +1,25 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Job stats:
+job              count    min threads    max threads
+-------------  -------  -------------  -------------
+assemble_flye        1              1              1
+total                1              1              1
+
+Select jobs to execute...
+
+[Tue Nov 29 14:49:56 2022]
+Job 0: 
+        Assembling EC2D2/read_subsets/sample_01.fastq with flye.        
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_01.fasta
+
+RuleException in rule assemble_flye  in line 55 of /home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakefile:
+AttributeError: 'OutputFiles' object has no attribute 'tmp_dir', when formatting the following:
+
+        flye --nano-raw {input.subsampled} --threads {params.nthreads} --out-dir {params.tmp_dir}
+        cp {output.tmp_dir}/assembly.fasta {output.assembly}
+        rm -r {output.tmp_dir} 
+        

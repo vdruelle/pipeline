@@ -1,0 +1,76 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=10
+Job stats:
+job          count    min threads    max threads
+---------  -------  -------------  -------------
+all              1              1              1
+consensus        1              4              4
+msa              1              4              4
+partition        1              4              4
+polish           1              2              2
+total            5              1              4
+
+Select jobs to execute...
+
+[Fri Dec  2 14:28:23 2022]
+Job 4: 
+        Making multiple sequence alignment of the clusters.
+        
+Reason: Missing output files: EC2D2/clusters/cluster_001/3_msa.fasta
+
+[Fri Dec  2 14:31:38 2022]
+Finished job 4.
+1 of 5 steps (20%) done
+Select jobs to execute...
+
+[Fri Dec  2 14:31:38 2022]
+Job 3: 
+        Partinioning reads.
+        
+Reason: Missing output files: EC2D2/clusters/cluster_001/4_reads.fastq; Input files updated by another job: EC2D2/clusters/cluster_001/3_msa.fasta; Set of input files has changed since last execution; Code has changed since last execution
+
+[Fri Dec  2 14:32:01 2022]
+Finished job 3.
+2 of 5 steps (40%) done
+Select jobs to execute...
+
+[Fri Dec  2 14:32:01 2022]
+Job 2: 
+        Making consensus for EC2D2/clusters/cluster_001.
+        
+Reason: Missing output files: EC2D2/clusters/cluster_001/7_final_consensus.fasta; Input files updated by another job: EC2D2/clusters/cluster_001/4_reads.fastq
+
+[Fri Dec  2 14:32:07 2022]
+Finished job 2.
+3 of 5 steps (60%) done
+Select jobs to execute...
+
+[Fri Dec  2 14:32:07 2022]
+Job 1: 
+        Polishing EC2D2/clusters/cluster_001/7_final_consensus.fasta.
+        
+Reason: Missing output files: EC2D2/clusters/cluster_001/8_polished_consensus.fasta; Input files updated by another job: EC2D2/clusters/cluster_001/7_final_consensus.fasta
+
+[Fri Dec  2 14:32:38 2022]
+Error in rule polish:
+    jobid: 1
+    input: EC2D2/clusters/cluster_001/7_final_consensus.fasta, EC2D2/filtered.fastq
+    output: EC2D2/clusters/cluster_001/8_polished_consensus.fasta
+    shell:
+        
+        medaka_consensus -i EC2D2/filtered.fastq -d EC2D2/clusters/cluster_001/7_final_consensus.fasta -o EC2D2/clusters/cluster_001/medaka -m r941_min_fast_g507 -t 2
+        mv EC2D2/clusters/cluster_001/medaka/consensus.fasta EC2D2/clusters/cluster_001/8_polished_consensus.fasta
+        rm -r EC2D2/clusters/cluster_001/medaka
+        rm *.fai
+        rm *.mmi
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Removing output files of failed job polish since they might be corrupted:
+EC2D2/clusters/cluster_001/8_polished_consensus.fasta
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2022-12-02T142823.213433.snakemake.log

@@ -1,0 +1,3 @@
+AttributeError in line 5 of /home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakefirst:
+'Rules' object has no attribute 'check_contigs'
+  File "/home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakefirst", line 5, in <module>

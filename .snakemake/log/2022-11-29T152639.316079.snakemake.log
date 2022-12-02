@@ -1,0 +1,76 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Job stats:
+job                 count    min threads    max threads
+----------------  -------  -------------  -------------
+assemble_flye           3              1              1
+assemble_miniasm        1              1              1
+assemble_raven          2              1              1
+cluster                 1              1              1
+total                   7              1              1
+
+Select jobs to execute...
+
+[Tue Nov 29 15:26:39 2022]
+Job 12: 
+        Assembling EC2D2/read_subsets/sample_10.fastq with miniasm.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_10.fasta; Code has changed since last execution
+
+
+[Tue Nov 29 15:26:39 2022]
+Job 1: 
+        Assembling EC2D2/read_subsets/sample_01.fastq with flye.        
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_01.fasta
+
+
+[Tue Nov 29 15:26:39 2022]
+Job 6: 
+        Assembling EC2D2/read_subsets/sample_04.fastq with flye.        
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_04.fasta
+
+
+[Tue Nov 29 15:26:39 2022]
+Job 10: 
+        Assembling EC2D2/read_subsets/sample_08.fastq with raven.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_08.fasta; Code has changed since last execution
+
+[Tue Nov 29 15:26:48 2022]
+Error in rule assemble_flye:
+    jobid: 1
+    input: EC2D2/read_subsets/sample_01.fastq
+    output: EC2D2/assemblies/assembly_01.fasta
+    shell:
+        
+        flye --nano-raw EC2D2/read_subsets/sample_01.fastq --threads 4 --out-dir EC2D2/assembly_01
+        cp EC2D2/assembly_01/assembly.fasta EC2D2/assemblies/assembly_01.fasta
+        rm -r EC2D2/assembly_01 
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+[Tue Nov 29 15:26:49 2022]
+Finished job 10.
+1 of 7 steps (14%) done
+[Tue Nov 29 15:27:00 2022]
+Finished job 12.
+2 of 7 steps (29%) done
+Terminating processes on user request, this might take some time.
+[Tue Nov 29 15:27:49 2022]
+Error in rule assemble_flye:
+    jobid: 6
+    input: EC2D2/read_subsets/sample_04.fastq
+    output: EC2D2/assemblies/assembly_04.fasta
+    shell:
+        
+        flye --nano-raw EC2D2/read_subsets/sample_04.fastq --threads 4 --out-dir EC2D2/assembly_04
+        cp EC2D2/assembly_04/assembly.fasta EC2D2/assemblies/assembly_04.fasta
+        rm -r EC2D2/assembly_04 
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Complete log: .snakemake/log/2022-11-29T152639.316079.snakemake.log

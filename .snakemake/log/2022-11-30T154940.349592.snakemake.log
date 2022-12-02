@@ -1,0 +1,36 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=10
+Job stats:
+job               count    min threads    max threads
+--------------  -------  -------------  -------------
+cluster_to_txt        1              1              1
+total                 1              1              1
+
+Select jobs to execute...
+
+[Wed Nov 30 15:49:40 2022]
+Job 0: 
+        Converting EC2D2/clusters/contigs.newick to EC2D2/clusters/contigs_tree.txt for easier viewing.
+        
+Reason: Missing output files: EC2D2/clusters/contigs_tree.txt
+
+
+        python snakecommands.py newick-to-txt EC2D2/clusters/contigs.newick EC2D2/clusters/contigs_tree.txt EC2D2/clusters
+        
+[Wed Nov 30 15:49:40 2022]
+Error in rule cluster_to_txt:
+    jobid: 0
+    input: EC2D2/clusters, EC2D2/clusters/contigs.newick
+    output: EC2D2/clusters/contigs_tree.txt
+    shell:
+        
+        python snakecommands.py newick-to-txt EC2D2/clusters/contigs.newick EC2D2/clusters/contigs_tree.txt EC2D2/clusters
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2022-11-30T154940.349592.snakemake.log

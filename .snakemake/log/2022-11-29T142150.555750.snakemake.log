@@ -1,0 +1,30 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Job stats:
+job          count    min threads    max threads
+---------  -------  -------------  -------------
+subsample        1              1              1
+total            1              1              1
+
+Select jobs to execute...
+
+[Tue Nov 29 14:21:50 2022]
+Job 0: 
+        Subsampling EC2D2/filtered.fastq in 12 parts.
+        
+Reason: Missing output files: EC2D2/read_subsets/sample_01.fastq
+
+ImproperOutputException in rule subsample  in line 36 of /home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakefile:
+Outputs of incorrect type (directories when expecting files or vice versa). Output directories must be flagged with directory(). for rule subsample:
+    output: EC2D2/read_subsets, EC2D2/read_subsets/sample_01.fastq, EC2D2/read_subsets/sample_02.fastq, EC2D2/read_subsets/sample_03.fastq, EC2D2/read_subsets/sample_04.fastq, EC2D2/read_subsets/sample_05.fastq, EC2D2/read_subsets/sample_06.fastq, EC2D2/read_subsets/sample_07.fastq, EC2D2/read_subsets/sample_08.fastq, EC2D2/read_subsets/sample_09.fastq, EC2D2/read_subsets/sample_10.fastq, EC2D2/read_subsets/sample_11.fastq, EC2D2/read_subsets/sample_12.fastq
+    wildcards: phage_name=EC2D2
+    affected files:
+        EC2D2/read_subsets
+Removing output files of failed job subsample since they might be corrupted:
+EC2D2/read_subsets, EC2D2/read_subsets/sample_01.fastq, EC2D2/read_subsets/sample_02.fastq, EC2D2/read_subsets/sample_03.fastq, EC2D2/read_subsets/sample_04.fastq, EC2D2/read_subsets/sample_05.fastq, EC2D2/read_subsets/sample_06.fastq, EC2D2/read_subsets/sample_07.fastq, EC2D2/read_subsets/sample_08.fastq, EC2D2/read_subsets/sample_09.fastq, EC2D2/read_subsets/sample_10.fastq, EC2D2/read_subsets/sample_11.fastq, EC2D2/read_subsets/sample_12.fastq
+Skipped removing non-empty directory EC2D2/read_subsets
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2022-11-29T142150.555750.snakemake.log

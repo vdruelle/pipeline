@@ -1,0 +1,28 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=10
+Job stats:
+job       count    min threads    max threads
+------  -------  -------------  -------------
+polish        1              4              4
+total         1              4              4
+
+Select jobs to execute...
+
+[Wed Nov 30 14:50:00 2022]
+Job 0: 
+        Polishing EC2D2/clusters/cluster_001/7_final_consensus.fasta.
+        
+Reason: Missing output files: EC2D2/clusters/cluster_001/8_polished_consensus.fasta
+
+
+        medaka_consensus -i EC2D2/filtered.fastq -d EC2D2/clusters/cluster_001/7_final_consensus.fasta -o EC2D2/clusters/cluster_001/medaka -m r941_min_fast_g507 -t 4
+        mv EC2D2/clusters/cluster_001/medaka/consensus.fasta EC2D2/clusters/cluster_001/8_polished_consensus.fasta
+        rm -r EC2D2/clusters/cluster_001/medaka
+        
+[Wed Nov 30 14:50:26 2022]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: .snakemake/log/2022-11-30T145000.650361.snakemake.log

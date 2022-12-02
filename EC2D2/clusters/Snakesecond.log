@@ -1,0 +1,455 @@
+
+Starting Trycycler reconcile (2022-12-02 14:21:56)
+    Trycycler reconcile is a tool for reconciling multiple alternative contigs
+with each other.
+
+Input reads: EC2D2/filtered.fastq
+  size = 50,331,305 bytes
+
+Input contigs:
+  EC2D2/clusters/cluster_001/1_contigs/A_contig_1.fasta (150,734 bp)
+  EC2D2/clusters/cluster_001/1_contigs/B_contig_1.fasta (150,731 bp)
+  EC2D2/clusters/cluster_001/1_contigs/C_contig_1.fasta (150,741 bp)
+  EC2D2/clusters/cluster_001/1_contigs/D_contig_1.fasta (150,737 bp)
+  EC2D2/clusters/cluster_001/1_contigs/E_Utg38.fasta (150,404 bp)
+  EC2D2/clusters/cluster_001/1_contigs/G_Utg34.fasta (150,408 bp)
+  EC2D2/clusters/cluster_001/1_contigs/I_utg000001l.fasta (150,721 bp)
+  EC2D2/clusters/cluster_001/1_contigs/J_utg000001l.fasta (150,734 bp)
+  EC2D2/clusters/cluster_001/1_contigs/K_utg000001l.fasta (150,722 bp)
+  EC2D2/clusters/cluster_001/1_contigs/L_utg000001l.fasta (150,722 bp)
+
+Checking required software:
+  minimap2: v2.24-r1122
+
+
+Initial check of contigs (2022-12-02 14:21:56)
+    Before proceeding, Trycycler ensures that the input contigs appear
+sufficiently close to each other to make a consensus. If not, the program will
+quit and the user must fix the input contigs (make them more similar to each
+other) or exclude some before trying again.
+
+Relative sequence lengths:
+  A_contig_1:   1.000  1.000  1.000  1.000  1.002  1.002  1.000  1.000  1.000  1.000
+  B_contig_1:   1.000  1.000  1.000  1.000  1.002  1.002  1.000  1.000  1.000  1.000
+  C_contig_1:   1.000  1.000  1.000  1.000  1.002  1.002  1.000  1.000  1.000  1.000
+  D_contig_1:   1.000  1.000  1.000  1.000  1.002  1.002  1.000  1.000  1.000  1.000
+  E_Utg38:      0.998  0.998  0.998  0.998  1.000  1.000  0.998  0.998  0.998  0.998
+  G_Utg34:      0.998  0.998  0.998  0.998  1.000  1.000  0.998  0.998  0.998  0.998
+  I_utg000001l: 1.000  1.000  1.000  1.000  1.002  1.002  1.000  1.000  1.000  1.000
+  J_utg000001l: 1.000  1.000  1.000  1.000  1.002  1.002  1.000  1.000  1.000  1.000
+  K_utg000001l: 1.000  1.000  1.000  1.000  1.002  1.002  1.000  1.000  1.000  1.000
+  L_utg000001l: 1.000  1.000  1.000  1.000  1.002  1.002  1.000  1.000  1.000  1.000
+
+Mash distances:
+  A_contig_1:   0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000
+  B_contig_1:   0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000
+  C_contig_1:   0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000
+  D_contig_1:   0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000
+  E_Utg38:      0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000
+  G_Utg34:      0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000
+  I_utg000001l: 0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000
+  J_utg000001l: 0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000
+  K_utg000001l: 0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000
+  L_utg000001l: 0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000  0.000
+
+Contigs have passed the initial check - they seem sufficiently close to reconcile.
+
+
+Normalising strands (2022-12-02 14:21:58)
+    In this step, Trycycler ensures that all sequences are on the same strand.
+It does this by first finding a sequence that occurs once in each contig and
+then flipping any of the contigs (converting to their reverse complement
+sequence) which have this sequence on the negative strand.
+
+Randomly-chosen common sequence:
+  TTTAATAGTCACAGGAGATAGTGGTCTATAACGTTGCAGAGCAATCGCTT
+  TAGCAATAGATTCTCGTGAAACTTTTGCAATAGGTTCAAAGGCAGCTAAA
+  CCCCTTCCACGAAGTAAATAATCTCTAAACACTTCATCAAAATGTTTAGG
+  TATTTCTTTGCTGGCGTGGACTGCACCATCCGTTAAAAACGGACGTGCAG
+  GAGTATTGTTTGTTTCATTACCAAACTGTTGTATGGCAGCAATTGCAGGG
+
+A_contig_1:   + strand (using original sequence)
+B_contig_1:   - strand (using reverse complement)
+C_contig_1:   - strand (using reverse complement)
+D_contig_1:   - strand (using reverse complement)
+E_Utg38:      + strand (using original sequence)
+G_Utg34:      + strand (using original sequence)
+I_utg000001l: - strand (using reverse complement)
+J_utg000001l: - strand (using reverse complement)
+K_utg000001l: - strand (using reverse complement)
+L_utg000001l: - strand (using reverse complement)
+
+
+Circularisation (2022-12-02 14:21:58)
+    Trycycler now compares the contigs to each other to repair any
+circularisation issues. After this step, each sequence should be cleanly
+circularised - i.e. the first base in the contig immediately follows the last
+base. Each contig will be circularised by looking for the position of its start
+and end in the other contigs. If necessary, additional sequence will be added
+or duplicated sequence will be removed. If there are multiple possible ways to
+fix a contig's circularisation, then Trycycler will use read alignments to
+choose the best one.
+
+Circularising A_contig_1:
+  using B_contig_1:
+    unable to circularise: cannot determine trim amount
+  using C_contig_1:
+    unable to circularise: cannot determine trim amount
+  using D_contig_1:
+    unable to circularise: A_contig_1's start/end is the same as D_contig_1's start/end
+  using E_Utg38:
+    circularising A_contig_1 by trimming 319 bp of sequence from the end
+  using G_Utg34:
+    circularising A_contig_1 by trimming 319 bp of sequence from the end
+  using I_utg000001l:
+    unable to circularise: A_contig_1's start/end is the same as I_utg000001l's start/end
+  using J_utg000001l:
+    unable to circularise: A_contig_1's start/end is the same as J_utg000001l's start/end
+  using K_utg000001l:
+    unable to circularise: A_contig_1's start/end is the same as K_utg000001l's start/end
+  using L_utg000001l:
+    unable to circularise: A_contig_1's start/end is the same as L_utg000001l's start/end
+  circularisation complete (150,415 bp)
+
+Circularising B_contig_1:
+  using A_contig_1:
+    unable to circularise: B_contig_1's start/end is the same as A_contig_1's start/end
+  using C_contig_1:
+    unable to circularise: B_contig_1's start/end is the same as C_contig_1's start/end
+  using D_contig_1:
+    unable to circularise: B_contig_1's start/end is the same as D_contig_1's start/end
+  using E_Utg38:
+    circularising B_contig_1 by trimming 314 bp of sequence from the end
+  using G_Utg34:
+    circularising B_contig_1 by trimming 314 bp of sequence from the end
+  using I_utg000001l:
+    unable to circularise: B_contig_1's start/end is the same as I_utg000001l's start/end
+  using J_utg000001l:
+    unable to circularise: B_contig_1's start/end is the same as J_utg000001l's start/end
+  using K_utg000001l:
+    unable to circularise: B_contig_1's start/end is the same as K_utg000001l's start/end
+  using L_utg000001l:
+    unable to circularise: B_contig_1's start/end is the same as L_utg000001l's start/end
+  circularisation complete (150,417 bp)
+
+Circularising C_contig_1:
+  using A_contig_1:
+    unable to circularise: C_contig_1's start/end is the same as A_contig_1's start/end
+  using B_contig_1:
+    unable to circularise: C_contig_1's start/end is the same as B_contig_1's start/end
+  using D_contig_1:
+    unable to circularise: C_contig_1's start/end is the same as D_contig_1's start/end
+  using E_Utg38:
+    circularising C_contig_1 by trimming 321 bp of sequence from the end
+  using G_Utg34:
+    circularising C_contig_1 by trimming 321 bp of sequence from the end
+  using I_utg000001l:
+    unable to circularise: C_contig_1's start/end is the same as I_utg000001l's start/end
+  using J_utg000001l:
+    unable to circularise: C_contig_1's start/end is the same as J_utg000001l's start/end
+  using K_utg000001l:
+    unable to circularise: C_contig_1's start/end is the same as K_utg000001l's start/end
+  using L_utg000001l:
+    unable to circularise: C_contig_1's start/end is the same as L_utg000001l's start/end
+  circularisation complete (150,420 bp)
+
+Circularising D_contig_1:
+  using A_contig_1:
+    unable to circularise: cannot determine trim amount
+  using B_contig_1:
+    unable to circularise: cannot determine trim amount
+  using C_contig_1:
+    unable to circularise: cannot determine trim amount
+  using E_Utg38:
+    circularising D_contig_1 by trimming 317 bp of sequence from the end
+  using G_Utg34:
+    circularising D_contig_1 by trimming 317 bp of sequence from the end
+  using I_utg000001l:
+    unable to circularise: D_contig_1's start/end is the same as I_utg000001l's start/end
+  using J_utg000001l:
+    unable to circularise: D_contig_1's start/end is the same as J_utg000001l's start/end
+  using K_utg000001l:
+    unable to circularise: D_contig_1's start/end is the same as K_utg000001l's start/end
+  using L_utg000001l:
+    unable to circularise: D_contig_1's start/end is the same as L_utg000001l's start/end
+  circularisation complete (150,420 bp)
+
+Circularising E_Utg38:
+  using A_contig_1:
+    no adjustment needed (E_Utg38 is already circular)
+  using B_contig_1:
+    no adjustment needed (E_Utg38 is already circular)
+  using C_contig_1:
+    no adjustment needed (E_Utg38 is already circular)
+  using D_contig_1:
+    no adjustment needed (E_Utg38 is already circular)
+  using G_Utg34:
+    no adjustment needed (E_Utg38 is already circular)
+  using I_utg000001l:
+    no adjustment needed (E_Utg38 is already circular)
+  using J_utg000001l:
+    no adjustment needed (E_Utg38 is already circular)
+  using K_utg000001l:
+    no adjustment needed (E_Utg38 is already circular)
+  using L_utg000001l:
+    no adjustment needed (E_Utg38 is already circular)
+  circularisation complete (150,404 bp)
+
+Circularising G_Utg34:
+  using A_contig_1:
+    no adjustment needed (G_Utg34 is already circular)
+  using B_contig_1:
+    no adjustment needed (G_Utg34 is already circular)
+  using C_contig_1:
+    no adjustment needed (G_Utg34 is already circular)
+  using D_contig_1:
+    no adjustment needed (G_Utg34 is already circular)
+  using E_Utg38:
+    no adjustment needed (G_Utg34 is already circular)
+  using I_utg000001l:
+    no adjustment needed (G_Utg34 is already circular)
+  using J_utg000001l:
+    no adjustment needed (G_Utg34 is already circular)
+  using K_utg000001l:
+    no adjustment needed (G_Utg34 is already circular)
+  using L_utg000001l:
+    no adjustment needed (G_Utg34 is already circular)
+  circularisation complete (150,408 bp)
+
+Circularising I_utg000001l:
+  using A_contig_1:
+    unable to circularise: cannot determine trim amount
+  using B_contig_1:
+    unable to circularise: cannot determine trim amount
+  using C_contig_1:
+    unable to circularise: cannot determine trim amount
+  using D_contig_1:
+    unable to circularise: cannot determine trim amount
+  using E_Utg38:
+    circularising I_utg000001l by trimming 306 bp of sequence from the end
+  using G_Utg34:
+    circularising I_utg000001l by trimming 306 bp of sequence from the end
+  using J_utg000001l:
+    unable to circularise: I_utg000001l's start/end is the same as J_utg000001l's start/end
+  using K_utg000001l:
+    unable to circularise: I_utg000001l's start/end is the same as K_utg000001l's start/end
+  using L_utg000001l:
+    unable to circularise: I_utg000001l's start/end is the same as L_utg000001l's start/end
+  circularisation complete (150,415 bp)
+
+Circularising J_utg000001l:
+  using A_contig_1:
+    unable to circularise: J_utg000001l's start/end is the same as A_contig_1's start/end
+  using B_contig_1:
+    unable to circularise: cannot determine trim amount
+  using C_contig_1:
+    unable to circularise: J_utg000001l's start/end is the same as C_contig_1's start/end
+  using D_contig_1:
+    unable to circularise: J_utg000001l's start/end is the same as D_contig_1's start/end
+  using E_Utg38:
+    circularising J_utg000001l by trimming 317 bp of sequence from the end
+  using G_Utg34:
+    circularising J_utg000001l by trimming 317 bp of sequence from the end
+  using I_utg000001l:
+    unable to circularise: J_utg000001l's start/end is the same as I_utg000001l's start/end
+  using K_utg000001l:
+    unable to circularise: J_utg000001l's start/end is the same as K_utg000001l's start/end
+  using L_utg000001l:
+    unable to circularise: J_utg000001l's start/end is the same as L_utg000001l's start/end
+  circularisation complete (150,417 bp)
+
+Circularising K_utg000001l:
+  using A_contig_1:
+    unable to circularise: cannot determine trim amount
+  using B_contig_1:
+    unable to circularise: cannot determine trim amount
+  using C_contig_1:
+    unable to circularise: cannot determine trim amount
+  using D_contig_1:
+    unable to circularise: cannot determine trim amount
+  using E_Utg38:
+    circularising K_utg000001l by trimming 308 bp of sequence from the end
+  using G_Utg34:
+    circularising K_utg000001l by trimming 308 bp of sequence from the end
+  using I_utg000001l:
+    unable to circularise: K_utg000001l's start/end is the same as I_utg000001l's start/end
+  using J_utg000001l:
+    unable to circularise: K_utg000001l's start/end is the same as J_utg000001l's start/end
+  using L_utg000001l:
+    unable to circularise: K_utg000001l's start/end is the same as L_utg000001l's start/end
+  circularisation complete (150,414 bp)
+
+Circularising L_utg000001l:
+  using A_contig_1:
+    unable to circularise: cannot determine trim amount
+  using B_contig_1:
+    unable to circularise: cannot determine trim amount
+  using C_contig_1:
+    unable to circularise: cannot determine trim amount
+  using D_contig_1:
+    unable to circularise: cannot determine trim amount
+  using E_Utg38:
+    circularising L_utg000001l by trimming 308 bp of sequence from the end
+  using G_Utg34:
+    circularising L_utg000001l by trimming 308 bp of sequence from the end
+  using I_utg000001l:
+    unable to circularise: L_utg000001l's start/end is the same as I_utg000001l's start/end
+  using J_utg000001l:
+    unable to circularise: L_utg000001l's start/end is the same as J_utg000001l's start/end
+  using K_utg000001l:
+    unable to circularise: L_utg000001l's start/end is the same as K_utg000001l's start/end
+  circularisation complete (150,414 bp)
+
+
+Finding starting sequence (2022-12-02 14:22:02)
+    In this step, Trycycler finds a sequence to use as a starting point for
+each of the contigs. This can be a standard starting point (e.g. the dnaA gene)
+or if one is not found, then a randomly-chosen unique sequence will be used. If
+necessary, the sequences will be flipped (converted to their reverse complement
+sequence) to ensure that the starting sequence is on the positive strand.
+
+Looking for known starting sequences in each contig...
+
+Unable to find a suitable known starting sequence
+
+Randomly-chosen common sequence:
+  AGCGTCAGGGACGCGTAACGGCTTTTATATCCCGATTGTTGAAAGTGAGG
+  AAGGATGGGGTAGCAAACATGATGGTTATATGGTAGGATTCACCATAGAA
+  GATCTTGAAGAACGCCGTAAAGTCTTTGAGGCAGCTAATACAGAAAAGTA
+  TGGCTACTACTATGAACGACCTGTTCGTTACATTCCTGTTGTGCTTAGTC
+  CTAAAGCTGTTGAAACAATGTCTGCAACAGAAAAAGAAAGGACTCGCCAT
+
+A_contig_1:   + strand (using original sequence)
+B_contig_1:   + strand (using original sequence)
+C_contig_1:   + strand (using original sequence)
+D_contig_1:   + strand (using original sequence)
+E_Utg38:      + strand (using original sequence)
+G_Utg34:      + strand (using original sequence)
+I_utg000001l: + strand (using original sequence)
+J_utg000001l: + strand (using original sequence)
+K_utg000001l: + strand (using original sequence)
+L_utg000001l: + strand (using original sequence)
+
+
+Rotating contigs to starting sequence (2022-12-02 14:22:04)
+    For a circular contig, any point in the sequence is a valid starting
+position and it can thus be 'rotated' by moving sequence from the contig start
+to the contig end. In this step, Trycycler rotates each contig such that it
+begins with the starting sequence, ensuring that all contigs begin and end
+together so they can be aligned to each other.
+
+A_contig_1: rotating by 19,451 bp
+   AGCGTCAGGGACGCGTAACG...CTTCAGGCTCAAGAAAAACC (150,415 bp)
+
+B_contig_1: rotating by 19,445 bp
+   AGCGTCAGGGACGCGTAACG...CTTCAGGCTCAAGAAAAACC (150,417 bp)
+
+C_contig_1: rotating by 19,450 bp
+   AGCGTCAGGGACGCGTAACG...CTTCAGGCTCAAGAAAAACC (150,420 bp)
+
+D_contig_1: rotating by 19,450 bp
+   AGCGTCAGGGACGCGTAACG...CTTCAGGCTCAAGAAAAACC (150,420 bp)
+
+E_Utg38: rotating by 49,478 bp
+   AGCGTCAGGGACGCGTAACG...CTTCAGGCTCAAGAAAAACC (150,404 bp)
+
+G_Utg34: rotating by 82,527 bp
+   AGCGTCAGGGACGCGTAACG...CTTCAGGCTCAAGAAAAACC (150,408 bp)
+
+I_utg000001l: rotating by 19,440 bp
+   AGCGTCAGGGACGCGTAACG...CTTCAGGCTCAAGAAAAACC (150,415 bp)
+
+J_utg000001l: rotating by 19,449 bp
+   AGCGTCAGGGACGCGTAACG...CTTCAGGCTCAAGAAAAACC (150,417 bp)
+
+K_utg000001l: rotating by 19,439 bp
+   AGCGTCAGGGACGCGTAACG...CTTCAGGCTCAAGAAAAACC (150,414 bp)
+
+L_utg000001l: rotating by 19,446 bp
+   AGCGTCAGGGACGCGTAACG...CTTCAGGCTCAAGAAAAACC (150,414 bp)
+
+
+Pairwise global alignments (2022-12-02 14:22:04)
+    Trycycler uses the edlib aligner to get global alignments between all pairs
+of sequences. This can help you to spot any problematic sequences that should
+be excluded before continuing. If you see any sequences with notably worse
+identities or max indels, you can remove them (delete the contig's FASTA) and
+run this command again.
+
+  A_contig_1 vs B_contig_1...   100.00% identity, max indel = 2
+  A_contig_1 vs C_contig_1...   99.99% identity, max indel = 2
+  A_contig_1 vs D_contig_1...   99.99% identity, max indel = 1
+  A_contig_1 vs E_Utg38...      99.97% identity, max indel = 7
+  A_contig_1 vs G_Utg34...      99.98% identity, max indel = 4
+  A_contig_1 vs I_utg000001l... 99.98% identity, max indel = 2
+  A_contig_1 vs J_utg000001l... 99.98% identity, max indel = 3
+  A_contig_1 vs K_utg000001l... 99.97% identity, max indel = 3
+  A_contig_1 vs L_utg000001l... 99.98% identity, max indel = 3
+  B_contig_1 vs C_contig_1...   99.99% identity, max indel = 2
+  B_contig_1 vs D_contig_1...   99.99% identity, max indel = 2
+  B_contig_1 vs E_Utg38...      99.97% identity, max indel = 7
+  B_contig_1 vs G_Utg34...      99.98% identity, max indel = 4
+  B_contig_1 vs I_utg000001l... 99.98% identity, max indel = 2
+  B_contig_1 vs J_utg000001l... 99.98% identity, max indel = 3
+  B_contig_1 vs K_utg000001l... 99.97% identity, max indel = 3
+  B_contig_1 vs L_utg000001l... 99.98% identity, max indel = 3
+  C_contig_1 vs D_contig_1...   99.99% identity, max indel = 2
+  C_contig_1 vs E_Utg38...      99.98% identity, max indel = 7
+  C_contig_1 vs G_Utg34...      99.98% identity, max indel = 4
+  C_contig_1 vs I_utg000001l... 99.98% identity, max indel = 2
+  C_contig_1 vs J_utg000001l... 99.98% identity, max indel = 3
+  C_contig_1 vs K_utg000001l... 99.97% identity, max indel = 3
+  C_contig_1 vs L_utg000001l... 99.98% identity, max indel = 3
+  D_contig_1 vs E_Utg38...      99.98% identity, max indel = 7
+  D_contig_1 vs G_Utg34...      99.98% identity, max indel = 4
+  D_contig_1 vs I_utg000001l... 99.98% identity, max indel = 2
+  D_contig_1 vs J_utg000001l... 99.98% identity, max indel = 3
+  D_contig_1 vs K_utg000001l... 99.98% identity, max indel = 3
+  D_contig_1 vs L_utg000001l... 99.98% identity, max indel = 3
+     E_Utg38 vs G_Utg34...      99.97% identity, max indel = 7
+     E_Utg38 vs I_utg000001l... 99.97% identity, max indel = 7
+     E_Utg38 vs J_utg000001l... 99.97% identity, max indel = 7
+     E_Utg38 vs K_utg000001l... 99.97% identity, max indel = 7
+     E_Utg38 vs L_utg000001l... 99.97% identity, max indel = 7
+     G_Utg34 vs I_utg000001l... 99.97% identity, max indel = 4
+     G_Utg34 vs J_utg000001l... 99.97% identity, max indel = 4
+     G_Utg34 vs K_utg000001l... 99.97% identity, max indel = 4
+     G_Utg34 vs L_utg000001l... 99.97% identity, max indel = 4
+I_utg000001l vs J_utg000001l... 99.98% identity, max indel = 3
+I_utg000001l vs K_utg000001l... 99.98% identity, max indel = 3
+I_utg000001l vs L_utg000001l... 99.98% identity, max indel = 3
+J_utg000001l vs K_utg000001l... 99.98% identity, max indel = 3
+J_utg000001l vs L_utg000001l... 99.98% identity, max indel = 3
+K_utg000001l vs L_utg000001l... 99.98% identity, max indel = 3
+
+Pairwise identities:
+  A_contig_1:   100.00%  100.00%   99.99%   99.99%   99.97%   99.98%   99.98%   99.98%   99.97%   99.98%
+  B_contig_1:   100.00%  100.00%   99.99%   99.99%   99.97%   99.98%   99.98%   99.98%   99.97%   99.98%
+  C_contig_1:    99.99%   99.99%  100.00%   99.99%   99.98%   99.98%   99.98%   99.98%   99.97%   99.98%
+  D_contig_1:    99.99%   99.99%   99.99%  100.00%   99.98%   99.98%   99.98%   99.98%   99.98%   99.98%
+  E_Utg38:       99.97%   99.97%   99.98%   99.98%  100.00%   99.97%   99.97%   99.97%   99.97%   99.97%
+  G_Utg34:       99.98%   99.98%   99.98%   99.98%   99.97%  100.00%   99.97%   99.97%   99.97%   99.97%
+  I_utg000001l:  99.98%   99.98%   99.98%   99.98%   99.97%   99.97%  100.00%   99.98%   99.98%   99.98%
+  J_utg000001l:  99.98%   99.98%   99.98%   99.98%   99.97%   99.97%   99.98%  100.00%   99.98%   99.98%
+  K_utg000001l:  99.97%   99.97%   99.97%   99.98%   99.97%   99.97%   99.98%   99.98%  100.00%   99.98%
+  L_utg000001l:  99.98%   99.98%   99.98%   99.98%   99.97%   99.97%   99.98%   99.98%   99.98%  100.00%
+
+Maximum insertion/deletion sizes:
+  A_contig_1:   0  2  2  1  7  4  2  3  3  3
+  B_contig_1:   2  0  2  2  7  4  2  3  3  3
+  C_contig_1:   2  2  0  2  7  4  2  3  3  3
+  D_contig_1:   1  2  2  0  7  4  2  3  3  3
+  E_Utg38:      7  7  7  7  0  7  7  7  7  7
+  G_Utg34:      4  4  4  4  7  0  4  4  4  4
+  I_utg000001l: 2  2  2  2  7  4  0  3  3  3
+  J_utg000001l: 3  3  3  3  7  4  3  0  3  3
+  K_utg000001l: 3  3  3  3  7  4  3  3  0  3
+  L_utg000001l: 3  3  3  3  7  4  3  3  3  0
+
+
+Finished! (2022-12-02 14:22:06)
+    All contig sequences are now reconciled and ready for the next step in the
+pipeline: trycycler msa.
+
+Saving sequences to file: EC2D2/clusters/cluster_001/2_all_seqs.fasta
+

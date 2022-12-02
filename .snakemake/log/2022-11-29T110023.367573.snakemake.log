@@ -1,0 +1,22 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job           count    min threads    max threads
+----------  -------  -------------  -------------
+convert_gz        1              1              1
+total             1              1              1
+
+Select jobs to execute...
+
+[Tue Nov 29 11:00:23 2022]
+Job 0: 
+        Converting input/barcode03.fastq to zip version for compatibility with the rest of the pipeline.
+        
+Reason: Missing output files: input/barcode03.fastq.gz
+
+[Tue Nov 29 11:00:32 2022]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: .snakemake/log/2022-11-29T110023.367573.snakemake.log

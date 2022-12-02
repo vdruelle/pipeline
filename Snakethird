@@ -1,0 +1,87 @@
+def get_phage_names(input_folder):
+    "Returns a list of the file names present in the input_folder."
+    phage_names = os.listdir(input_folder)
+    for ii in range(len(phage_names)):
+        phage_names[ii] = phage_names[ii].replace(".fasta", "")
+        phage_names[ii] = phage_names[ii].replace(".fastq.gz", "")
+
+    return phage_names
+
+NAMES = get_phage_names("input")
+
+rule all:
+    input: expand("{phage_name}/clusters/cluster_001/8_polished_consensus.fasta", phage_name = NAMES)
+
+rule msa:
+    message:
+        """
+        Making multiple sequence alignment of the clusters.
+        """
+    input:
+        cluster_dir = "{phage_name}/clusters/cluster_{id}"
+    output:
+        msa = "{phage_name}/clusters/cluster_{id}/3_msa.fasta"
+    threads: 4
+    shell:
+        """
+        trycycler msa --cluster_dir {input.cluster_dir}
+        """
+
+rule partition:
+    message:
+        """
+        Partinioning reads.
+        """
+    input:
+        reads = "{phage_name}/filtered.fastq",
+        cluster_dir = "{phage_name}/clusters/cluster_{id}",
+        msa = rules.msa.output.msa
+    output:
+        partitioned = "{phage_name}/clusters/cluster_{id}/4_reads.fastq"
+    threads: 4
+    shell:
+        """
+        trycycler partition --reads {input.reads} --cluster_dirs {input.cluster_dir} --threads {threads}
+        """
+
+rule consensus:
+    message:
+        """
+        Making consensus for {input.cluster_dir}.
+        """
+    input:
+        cluster_dir = "{phage_name}/clusters/cluster_{id}",
+        partitioned = rules.partition.output.partitioned
+    output:
+        consensus = "{phage_name}/clusters/cluster_{id}/7_final_consensus.fasta"
+    threads: 4
+    shell:
+        """
+        trycycler consensus --cluster_dir {input.cluster_dir} --threads {threads}
+        """
+
+
+rule polish:
+    message:
+        """
+        Polishing {input.consensus}.
+        """
+    input:
+        consensus = rules.consensus.output.consensus,
+        reads = rules.partition.input.reads
+    output:
+        consensus = "{phage_name}/clusters/cluster_{id}/8_polished_consensus.fasta"
+    threads: 2
+    params:
+        model = "r941_min_fast_g507",
+        tmp_dir = "{phage_name}/clusters/cluster_{id}/medaka"
+    shell:
+        """
+        medaka_consensus -i {input.reads} -d {input.consensus} -o {params.tmp_dir} -m {params.model} -t {threads}
+        mv {params.tmp_dir}/consensus.fasta {output.consensus}
+        rm -r {params.tmp_dir}
+        rm -f *.fai
+        rm -f *.mmi
+        cp {output.consensus} {wildcards.phage_name}/{wildcards.phage_name}_trycycler.fasta
+        """
+

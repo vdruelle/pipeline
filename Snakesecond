@@ -1,0 +1,39 @@
+# Second part of the pipeline
+# After this step one needs to inspect the log file and decide whether to remove some contigs
+# If so rerun the pipeline by forcing it with snakemake -s Snakesecond -F
+
+def get_phage_names(input_folder):
+    "Returns a list of the file names present in the input_folder."
+    phage_names = os.listdir(input_folder)
+    for ii in range(len(phage_names)):
+        phage_names[ii] = phage_names[ii].replace(".fasta", "")
+        phage_names[ii] = phage_names[ii].replace(".fastq.gz", "")
+
+    return phage_names
+
+NAMES = get_phage_names("input")
+
+
+rule all:
+    input: expand("{phage_name}/clusters/cluster_001/2_all_seqs.fasta", phage_name=NAMES)
+
+rule reconcile:
+    message:
+        """
+        Reconciling the sub assemblies. 
+        Human intervention is needed after this step to judge whether to keep or remove some contigs.
+        """
+    input:
+        cluster_dir = "{phage_name}/clusters/cluster_001",
+        reads = "{phage_name}/filtered.fastq"
+    output:
+        all_seq = "{phage_name}/clusters/cluster_001/2_all_seqs.fasta",
+        logfile = "{phage_name}/clusters/Snakesecond.log"
+    threads: 4
+    shell:
+        """
+        trycycler reconcile --reads {input.reads} --cluster_dir {input.cluster_dir} --threads {threads} \
+        > {output.logfile} 2>&1 \
+        || echo process failed >> {output.logfile}
+        sed -i -r "s/\x1B\[([0-9]{{1,2}}(;[0-9]{{1,2}})?)?[mGK]//g" {output.logfile}
+        """

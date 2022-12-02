@@ -1,0 +1,23 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=10
+Job stats:
+job          count    min threads    max threads
+---------  -------  -------------  -------------
+consensus        1              4              4
+total            1              4              4
+
+Select jobs to execute...
+
+[Wed Nov 30 14:33:35 2022]
+Job 0: 
+        Making consensus for EC2D2/clusters/cluster_001.
+        
+Reason: Missing output files: EC2D2/clusters/cluster_001/7_final_consensus.fasta
+
+[Wed Nov 30 14:33:41 2022]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: .snakemake/log/2022-11-30T143335.805732.snakemake.log

@@ -1,0 +1,25 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job      count    min threads    max threads
+-----  -------  -------------  -------------
+dummy        1              1              1
+total        1              1              1
+
+Select jobs to execute...
+
+[Tue Nov 29 13:53:23 2022]
+rule dummy:
+    input: EC2D2/read_subsets
+    output: EC2D2/test.txt
+    jobid: 0
+    reason: Missing output files: EC2D2/test.txt
+    wildcards: phage_name=EC2D2
+    resources: tmpdir=/tmp
+
+[Tue Nov 29 13:53:23 2022]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: .snakemake/log/2022-11-29T135322.924492.snakemake.log

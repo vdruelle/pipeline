@@ -1,0 +1,35 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=10
+Job stats:
+job          count    min threads    max threads
+---------  -------  -------------  -------------
+all              1              1              1
+consensus        1              4              4
+polish           1              2              2
+total            3              1              4
+
+Select jobs to execute...
+
+[Fri Dec  2 14:26:51 2022]
+Job 2: 
+        Making consensus for EC2D2/clusters/cluster_001.
+        
+Reason: Missing output files: EC2D2/clusters/cluster_001/7_final_consensus.fasta
+
+[Fri Dec  2 14:26:52 2022]
+Error in rule consensus:
+    jobid: 2
+    input: EC2D2/clusters/cluster_001
+    output: EC2D2/clusters/cluster_001/7_final_consensus.fasta
+    shell:
+        
+        trycycler consensus --cluster_dir EC2D2/clusters/cluster_001 --threads 4
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2022-12-02T142651.531002.snakemake.log

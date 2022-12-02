@@ -1,0 +1,3 @@
+SyntaxError:
+Only input files can be specified as functions
+  File "/home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakesecond", line 40, in <module>

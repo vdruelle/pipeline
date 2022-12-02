@@ -1,0 +1,194 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=10
+Job stats:
+job               count    min threads    max threads
+--------------  -------  -------------  -------------
+all                   1              1              1
+assemble_flye         4              4              4
+assemble_mini         4              4              4
+assemble_raven        4              2              2
+check_contigs         1              1              1
+cluster               1              4              4
+cluster_to_txt        1              1              1
+filtlong              1              1              1
+subsample             1              4              4
+total                18              1              4
+
+Select jobs to execute...
+
+[Fri Dec  2 13:45:34 2022]
+Job 5: 
+        Running filtlong on input/EC2D2.fastq.gz
+        
+Reason: Missing output files: EC2D2/filtered.fastq
+
+[Fri Dec  2 13:45:37 2022]
+Finished job 5.
+1 of 18 steps (6%) done
+Select jobs to execute...
+
+[Fri Dec  2 13:45:37 2022]
+Job 4: 
+        Subsampling EC2D2/filtered.fastq in 12 parts.
+        
+Reason: Missing output files: EC2D2/read_subsets/sample_05.fastq, EC2D2/read_subsets/sample_07.fastq, EC2D2/read_subsets/sample_01.fastq, EC2D2/read_subsets/sample_08.fastq, EC2D2/read_subsets/sample_09.fastq, EC2D2/read_subsets/sample_10.fastq, EC2D2/read_subsets/sample_02.fastq, EC2D2/read_subsets/sample_06.fastq, EC2D2/read_subsets/sample_12.fastq, EC2D2/read_subsets/sample_04.fastq, EC2D2/read_subsets/sample_03.fastq, EC2D2/read_subsets/sample_11.fastq; Input files updated by another job: EC2D2/filtered.fastq
+
+[Fri Dec  2 13:46:16 2022]
+Finished job 4.
+2 of 18 steps (11%) done
+Select jobs to execute...
+
+[Fri Dec  2 13:46:17 2022]
+Job 13: 
+        Assembling EC2D2/read_subsets/sample_09.fastq with miniasm.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_09.fasta; Input files updated by another job: EC2D2/read_subsets/sample_09.fastq
+
+
+[Fri Dec  2 13:46:17 2022]
+Job 14: 
+        Assembling EC2D2/read_subsets/sample_10.fastq with miniasm.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_10.fasta; Input files updated by another job: EC2D2/read_subsets/sample_10.fastq
+
+
+[Fri Dec  2 13:46:17 2022]
+Job 15: 
+        Assembling EC2D2/read_subsets/sample_11.fastq with miniasm.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_11.fasta; Input files updated by another job: EC2D2/read_subsets/sample_11.fastq
+
+[Fri Dec  2 13:46:51 2022]
+Finished job 14.
+3 of 18 steps (17%) done
+Select jobs to execute...
+
+[Fri Dec  2 13:46:51 2022]
+Job 12: 
+        Assembling EC2D2/read_subsets/sample_08.fastq with raven.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_08.fasta; Input files updated by another job: EC2D2/read_subsets/sample_08.fastq
+
+
+[Fri Dec  2 13:46:51 2022]
+Job 9: 
+        Assembling EC2D2/read_subsets/sample_05.fastq with raven.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_05.fasta; Input files updated by another job: EC2D2/read_subsets/sample_05.fastq
+
+[Fri Dec  2 13:46:51 2022]
+Finished job 13.
+4 of 18 steps (22%) done
+Select jobs to execute...
+
+[Fri Dec  2 13:46:51 2022]
+Job 16: 
+        Assembling EC2D2/read_subsets/sample_12.fastq with miniasm.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_12.fasta; Input files updated by another job: EC2D2/read_subsets/sample_12.fastq
+
+[Fri Dec  2 13:46:52 2022]
+Finished job 15.
+5 of 18 steps (28%) done
+Select jobs to execute...
+
+[Fri Dec  2 13:46:52 2022]
+Job 8: 
+        Assembling EC2D2/read_subsets/sample_04.fastq with flye.        
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_04.fasta; Input files updated by another job: EC2D2/read_subsets/sample_04.fastq
+
+[Fri Dec  2 13:47:14 2022]
+Finished job 9.
+6 of 18 steps (33%) done
+Select jobs to execute...
+
+[Fri Dec  2 13:47:14 2022]
+Job 11: 
+        Assembling EC2D2/read_subsets/sample_07.fastq with raven.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_07.fasta; Input files updated by another job: EC2D2/read_subsets/sample_07.fastq
+
+[Fri Dec  2 13:47:14 2022]
+Finished job 12.
+7 of 18 steps (39%) done
+Select jobs to execute...
+
+[Fri Dec  2 13:47:14 2022]
+Job 10: 
+        Assembling EC2D2/read_subsets/sample_06.fastq with raven.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_06.fasta; Input files updated by another job: EC2D2/read_subsets/sample_06.fastq
+
+[Fri Dec  2 13:47:24 2022]
+Finished job 16.
+8 of 18 steps (44%) done
+Select jobs to execute...
+[Fri Dec  2 13:47:32 2022]
+Finished job 10.
+9 of 18 steps (50%) done
+[Fri Dec  2 13:47:32 2022]
+Finished job 11.
+10 of 18 steps (56%) done
+[Fri Dec  2 13:49:04 2022]
+Finished job 8.
+11 of 18 steps (61%) done
+
+[Fri Dec  2 13:49:04 2022]
+Job 3: 
+        Assembling EC2D2/read_subsets/sample_01.fastq with flye.        
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_01.fasta; Input files updated by another job: EC2D2/read_subsets/sample_01.fastq
+
+[Fri Dec  2 13:50:51 2022]
+Finished job 3.
+12 of 18 steps (67%) done
+Select jobs to execute...
+
+[Fri Dec  2 13:50:51 2022]
+Job 6: 
+        Assembling EC2D2/read_subsets/sample_02.fastq with flye.        
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_02.fasta; Input files updated by another job: EC2D2/read_subsets/sample_02.fastq
+
+[Fri Dec  2 13:52:39 2022]
+Finished job 6.
+13 of 18 steps (72%) done
+Select jobs to execute...
+
+[Fri Dec  2 13:52:39 2022]
+Job 7: 
+        Assembling EC2D2/read_subsets/sample_03.fastq with flye.        
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_03.fasta; Input files updated by another job: EC2D2/read_subsets/sample_03.fastq
+
+[Fri Dec  2 13:54:38 2022]
+Finished job 7.
+14 of 18 steps (78%) done
+Select jobs to execute...
+
+[Fri Dec  2 13:54:38 2022]
+Job 2: 
+        Clustering the multiple assemblies.
+        
+Reason: Missing output files: EC2D2/clusters/contigs.newick; Input files updated by another job: EC2D2/assemblies/assembly_03.fasta, EC2D2/assemblies/assembly_09.fasta, EC2D2/filtered.fastq, EC2D2/assemblies/assembly_05.fasta, EC2D2/assemblies/assembly_11.fasta, EC2D2/assemblies/assembly_04.fasta, EC2D2/assemblies/assembly_12.fasta, EC2D2/assemblies/assembly_02.fasta, EC2D2/assemblies/assembly_06.fasta, EC2D2/assemblies/assembly_10.fasta, EC2D2/assemblies/assembly_07.fasta, EC2D2/assemblies/assembly_08.fasta, EC2D2/assemblies/assembly_01.fasta
+
+[Fri Dec  2 13:55:13 2022]
+Finished job 2.
+15 of 18 steps (83%) done
+Select jobs to execute...
+
+[Fri Dec  2 13:55:13 2022]
+Job 17: 
+        Checking whether there is need of human intervention.
+        
+Reason: Missing output files: EC2D2/clusters/Snakefirst.log; Input files updated by another job: EC2D2/clusters/contigs.newick; Set of input files has changed since last execution; Code has changed since last execution
+
+RuleException in rule check_contigs  in line 174 of /home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakefirst:
+NameError: The name 'phage_name' is unknown in this context. Did you mean 'wildcards.phage_name'?, when formatting the following:
+
+        python snakecommands.py check-contigs {phage_name}/clusters {input.nwk_tree} {output.logfile} {params.max_length}
+        

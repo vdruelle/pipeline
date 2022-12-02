@@ -1,0 +1,26 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=10
+Job stats:
+job          count    min threads    max threads
+---------  -------  -------------  -------------
+all              1              1              1
+reconcile        1              4              4
+total            2              1              4
+
+Select jobs to execute...
+
+[Thu Dec  1 12:04:39 2022]
+Job 1: 
+        Reconciling the sub assemblies. 
+        Human intervention is needed after this step to judge whether to keep or remove some contigs.
+        
+Reason: Code has changed since last execution
+
+RuleException in rule reconcile  in line 16 of /home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakesecond:
+NameError: The name '1,2' is unknown in this context. Please make sure that you defined that variable. Also note that braces not used for variable access have to be escaped by repeating them, i.e. {{print $1}}, when formatting the following:
+
+        trycycler reconcile --reads {input.reads} --cluster_dir {input.cluster_dir} --threads {threads}         | sed -r "s/\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" > {output.logfile} 2>&1         || echo process failed >> {output.logfile}
+        

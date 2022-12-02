@@ -1,0 +1,9 @@
+Building DAG of jobs...
+InputFunctionException in line 59 of /home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakefile:
+Error:
+  WorkflowError:
+    Missing wildcard values for phage_name
+Wildcards:
+
+Traceback:
+  File "/home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakefile", line 56, in aggregate_subsample

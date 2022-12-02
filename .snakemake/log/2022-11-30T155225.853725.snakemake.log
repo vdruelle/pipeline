@@ -1,0 +1,256 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=10
+Job stats:
+job               count    min threads    max threads
+--------------  -------  -------------  -------------
+assemble_flye         4              4              4
+assemble_mini         4              4              4
+assemble_raven        4              2              2
+cluster               1              4              4
+filtlong              1              1              1
+subsample             1              4              4
+total                15              1              4
+
+Select jobs to execute...
+
+[Wed Nov 30 15:52:26 2022]
+Job 3: 
+        Running filtlong on input/EC2D2.fastq.gz
+        
+Reason: Missing output files: EC2D2/filtered.fastq
+
+
+        filtlong --min_length 5000 --keep_percent 95         input/EC2D2.fastq.gz > EC2D2/filtered.fastq
+        
+[Wed Nov 30 15:52:29 2022]
+Finished job 3.
+1 of 15 steps (7%) done
+Select jobs to execute...
+
+[Wed Nov 30 15:52:29 2022]
+Job 2: 
+        Subsampling EC2D2/filtered.fastq in 12 parts.
+        
+Reason: Missing output files: EC2D2/read_subsets/sample_03.fastq, EC2D2/read_subsets/sample_05.fastq, EC2D2/read_subsets/sample_07.fastq, EC2D2/read_subsets/sample_11.fastq, EC2D2/read_subsets/sample_02.fastq, EC2D2/read_subsets/sample_01.fastq, EC2D2/read_subsets/sample_06.fastq, EC2D2/read_subsets/sample_12.fastq, EC2D2/read_subsets/sample_04.fastq, EC2D2/read_subsets/sample_10.fastq, EC2D2/read_subsets/sample_09.fastq, EC2D2/read_subsets/sample_08.fastq; Input files updated by another job: EC2D2/filtered.fastq
+
+
+        trycycler subsample --reads EC2D2/filtered.fastq --out_dir EC2D2/read_subsets --threads 4
+        
+[Wed Nov 30 15:53:09 2022]
+Finished job 2.
+2 of 15 steps (13%) done
+Select jobs to execute...
+
+[Wed Nov 30 15:53:09 2022]
+Job 11: 
+        Assembling EC2D2/read_subsets/sample_09.fastq with miniasm.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_09.fasta; Input files updated by another job: EC2D2/read_subsets/sample_09.fastq
+
+
+        mkdir EC2D2/assembly_09
+        minimap2 -x ava-ont -t 4 EC2D2/read_subsets/sample_09.fastq EC2D2/read_subsets/sample_09.fastq         > EC2D2/assembly_09/overlaps.paf
+        miniasm -f EC2D2/read_subsets/sample_09.fastq EC2D2/assembly_09/overlaps.paf > EC2D2/assembly_09/unpolished.gfa
+        minipolish --threads 4 EC2D2/read_subsets/sample_09.fastq EC2D2/assembly_09/unpolished.gfa >         EC2D2/assembly_09/assembly.gfa
+        any2fasta EC2D2/assembly_09/assembly.gfa > EC2D2/assemblies/assembly_09.fasta
+        rm -r EC2D2/assembly_09
+        
+
+[Wed Nov 30 15:53:09 2022]
+Job 12: 
+        Assembling EC2D2/read_subsets/sample_10.fastq with miniasm.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_10.fasta; Input files updated by another job: EC2D2/read_subsets/sample_10.fastq
+
+
+        mkdir EC2D2/assembly_10
+        minimap2 -x ava-ont -t 4 EC2D2/read_subsets/sample_10.fastq EC2D2/read_subsets/sample_10.fastq         > EC2D2/assembly_10/overlaps.paf
+        miniasm -f EC2D2/read_subsets/sample_10.fastq EC2D2/assembly_10/overlaps.paf > EC2D2/assembly_10/unpolished.gfa
+        minipolish --threads 4 EC2D2/read_subsets/sample_10.fastq EC2D2/assembly_10/unpolished.gfa >         EC2D2/assembly_10/assembly.gfa
+        any2fasta EC2D2/assembly_10/assembly.gfa > EC2D2/assemblies/assembly_10.fasta
+        rm -r EC2D2/assembly_10
+        
+
+[Wed Nov 30 15:53:09 2022]
+Job 13: 
+        Assembling EC2D2/read_subsets/sample_11.fastq with miniasm.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_11.fasta; Input files updated by another job: EC2D2/read_subsets/sample_11.fastq
+
+
+        mkdir EC2D2/assembly_11
+        minimap2 -x ava-ont -t 4 EC2D2/read_subsets/sample_11.fastq EC2D2/read_subsets/sample_11.fastq         > EC2D2/assembly_11/overlaps.paf
+        miniasm -f EC2D2/read_subsets/sample_11.fastq EC2D2/assembly_11/overlaps.paf > EC2D2/assembly_11/unpolished.gfa
+        minipolish --threads 4 EC2D2/read_subsets/sample_11.fastq EC2D2/assembly_11/unpolished.gfa >         EC2D2/assembly_11/assembly.gfa
+        any2fasta EC2D2/assembly_11/assembly.gfa > EC2D2/assemblies/assembly_11.fasta
+        rm -r EC2D2/assembly_11
+        
+[Wed Nov 30 15:53:44 2022]
+Finished job 12.
+3 of 15 steps (20%) done
+Select jobs to execute...
+
+[Wed Nov 30 15:53:44 2022]
+Job 7: 
+        Assembling EC2D2/read_subsets/sample_05.fastq with raven.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_05.fasta; Input files updated by another job: EC2D2/read_subsets/sample_05.fastq
+
+
+        raven --threads 2 EC2D2/read_subsets/sample_05.fastq > EC2D2/assemblies/assembly_05.fasta
+        rm raven.cereal
+        
+
+[Wed Nov 30 15:53:44 2022]
+Job 9: 
+        Assembling EC2D2/read_subsets/sample_07.fastq with raven.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_07.fasta; Input files updated by another job: EC2D2/read_subsets/sample_07.fastq
+
+
+        raven --threads 2 EC2D2/read_subsets/sample_07.fastq > EC2D2/assemblies/assembly_07.fasta
+        rm raven.cereal
+        
+[Wed Nov 30 15:53:44 2022]
+Finished job 13.
+4 of 15 steps (27%) done
+Select jobs to execute...
+
+[Wed Nov 30 15:53:44 2022]
+Job 14: 
+        Assembling EC2D2/read_subsets/sample_12.fastq with miniasm.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_12.fasta; Input files updated by another job: EC2D2/read_subsets/sample_12.fastq
+
+
+        mkdir EC2D2/assembly_12
+        minimap2 -x ava-ont -t 4 EC2D2/read_subsets/sample_12.fastq EC2D2/read_subsets/sample_12.fastq         > EC2D2/assembly_12/overlaps.paf
+        miniasm -f EC2D2/read_subsets/sample_12.fastq EC2D2/assembly_12/overlaps.paf > EC2D2/assembly_12/unpolished.gfa
+        minipolish --threads 4 EC2D2/read_subsets/sample_12.fastq EC2D2/assembly_12/unpolished.gfa >         EC2D2/assembly_12/assembly.gfa
+        any2fasta EC2D2/assembly_12/assembly.gfa > EC2D2/assemblies/assembly_12.fasta
+        rm -r EC2D2/assembly_12
+        
+[Wed Nov 30 15:53:44 2022]
+Finished job 11.
+5 of 15 steps (33%) done
+Select jobs to execute...
+
+[Wed Nov 30 15:53:44 2022]
+Job 6: 
+        Assembling EC2D2/read_subsets/sample_04.fastq with flye.        
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_04.fasta; Input files updated by another job: EC2D2/read_subsets/sample_04.fastq
+
+
+        flye --nano-raw EC2D2/read_subsets/sample_04.fastq --threads 4 --out-dir EC2D2/assembly_04
+        cp EC2D2/assembly_04/assembly.fasta EC2D2/assemblies/assembly_04.fasta
+        rm -r EC2D2/assembly_04 
+        
+[Wed Nov 30 15:54:03 2022]
+Finished job 9.
+6 of 15 steps (40%) done
+Select jobs to execute...
+
+[Wed Nov 30 15:54:04 2022]
+Job 8: 
+        Assembling EC2D2/read_subsets/sample_06.fastq with raven.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_06.fasta; Input files updated by another job: EC2D2/read_subsets/sample_06.fastq
+
+
+        raven --threads 2 EC2D2/read_subsets/sample_06.fastq > EC2D2/assemblies/assembly_06.fasta
+        rm raven.cereal
+        
+[Wed Nov 30 15:54:06 2022]
+Finished job 7.
+7 of 15 steps (47%) done
+Select jobs to execute...
+
+[Wed Nov 30 15:54:06 2022]
+Job 10: 
+        Assembling EC2D2/read_subsets/sample_08.fastq with raven.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_08.fasta; Input files updated by another job: EC2D2/read_subsets/sample_08.fastq
+
+
+        raven --threads 2 EC2D2/read_subsets/sample_08.fastq > EC2D2/assemblies/assembly_08.fasta
+        rm raven.cereal
+        
+[Wed Nov 30 15:54:14 2022]
+Finished job 14.
+8 of 15 steps (53%) done
+Select jobs to execute...
+[Wed Nov 30 15:54:21 2022]
+Finished job 8.
+9 of 15 steps (60%) done
+[Wed Nov 30 15:54:22 2022]
+Finished job 10.
+10 of 15 steps (67%) done
+[Wed Nov 30 15:55:52 2022]
+Finished job 6.
+11 of 15 steps (73%) done
+
+[Wed Nov 30 15:55:52 2022]
+Job 1: 
+        Assembling EC2D2/read_subsets/sample_01.fastq with flye.        
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_01.fasta; Input files updated by another job: EC2D2/read_subsets/sample_01.fastq
+
+
+        flye --nano-raw EC2D2/read_subsets/sample_01.fastq --threads 4 --out-dir EC2D2/assembly_01
+        cp EC2D2/assembly_01/assembly.fasta EC2D2/assemblies/assembly_01.fasta
+        rm -r EC2D2/assembly_01 
+        
+[Wed Nov 30 15:57:53 2022]
+Finished job 1.
+12 of 15 steps (80%) done
+Select jobs to execute...
+
+[Wed Nov 30 15:57:53 2022]
+Job 4: 
+        Assembling EC2D2/read_subsets/sample_02.fastq with flye.        
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_02.fasta; Input files updated by another job: EC2D2/read_subsets/sample_02.fastq
+
+
+        flye --nano-raw EC2D2/read_subsets/sample_02.fastq --threads 4 --out-dir EC2D2/assembly_02
+        cp EC2D2/assembly_02/assembly.fasta EC2D2/assemblies/assembly_02.fasta
+        rm -r EC2D2/assembly_02 
+        
+[Wed Nov 30 15:59:56 2022]
+Finished job 4.
+13 of 15 steps (87%) done
+Select jobs to execute...
+
+[Wed Nov 30 15:59:56 2022]
+Job 5: 
+        Assembling EC2D2/read_subsets/sample_03.fastq with flye.        
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_03.fasta; Input files updated by another job: EC2D2/read_subsets/sample_03.fastq
+
+
+        flye --nano-raw EC2D2/read_subsets/sample_03.fastq --threads 4 --out-dir EC2D2/assembly_03
+        cp EC2D2/assembly_03/assembly.fasta EC2D2/assemblies/assembly_03.fasta
+        rm -r EC2D2/assembly_03 
+        
+[Wed Nov 30 16:01:58 2022]
+Finished job 5.
+14 of 15 steps (93%) done
+Select jobs to execute...
+
+[Wed Nov 30 16:01:58 2022]
+Job 0: 
+        Clustering the multiple assemblies.
+        
+Reason: Missing output files: EC2D2/clusters/contigs.newick; Input files updated by another job: EC2D2/assemblies/assembly_07.fasta, EC2D2/assemblies/assembly_08.fasta, EC2D2/assemblies/assembly_09.fasta, EC2D2/assemblies/assembly_03.fasta, EC2D2/assemblies/assembly_11.fasta, EC2D2/assemblies/assembly_01.fasta, EC2D2/assemblies/assembly_12.fasta, EC2D2/assemblies/assembly_10.fasta, EC2D2/assemblies/assembly_06.fasta, EC2D2/filtered.fastq, EC2D2/assemblies/assembly_05.fasta, EC2D2/assemblies/assembly_02.fasta, EC2D2/assemblies/assembly_04.fasta
+
+
+        trycycler cluster --reads EC2D2/filtered.fastq --assemblies EC2D2/assemblies/assembly_01.fasta EC2D2/assemblies/assembly_02.fasta EC2D2/assemblies/assembly_03.fasta EC2D2/assemblies/assembly_04.fasta EC2D2/assemblies/assembly_05.fasta EC2D2/assemblies/assembly_06.fasta EC2D2/assemblies/assembly_07.fasta EC2D2/assemblies/assembly_08.fasta EC2D2/assemblies/assembly_09.fasta EC2D2/assemblies/assembly_10.fasta EC2D2/assemblies/assembly_11.fasta EC2D2/assemblies/assembly_12.fasta         --out_dir EC2D2/clusters         --min_contig_len 5000 --threads 4
+        
+[Wed Nov 30 16:02:35 2022]
+Finished job 0.
+15 of 15 steps (100%) done
+Complete log: .snakemake/log/2022-11-30T155225.853725.snakemake.log

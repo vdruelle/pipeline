@@ -1,0 +1,40 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=10
+Job stats:
+job        count    min threads    max threads
+-------  -------  -------------  -------------
+cluster        1              4              4
+total          1              4              4
+
+Select jobs to execute...
+
+[Wed Nov 30 15:16:59 2022]
+Job 0: 
+        Clustering the multiple assemblies.
+        
+Reason: Missing output files: EC2D2/clusters/contigs.newick
+
+
+        trycycler cluster --reads EC2D2/filtered.fastq --assemblies EC2D2/assemblies/assembly_01.fasta EC2D2/assemblies/assembly_02.fasta EC2D2/assemblies/assembly_03.fasta EC2D2/assemblies/assembly_04.fasta EC2D2/assemblies/assembly_05.fasta EC2D2/assemblies/assembly_06.fasta EC2D2/assemblies/assembly_07.fasta EC2D2/assemblies/assembly_08.fasta EC2D2/assemblies/assembly_09.fasta EC2D2/assemblies/assembly_10.fasta EC2D2/assemblies/assembly_11.fasta EC2D2/assemblies/assembly_12.fasta         --out_dir EC2D2/clusters         --min_contig_len 5000 --threads 4
+        nw_display EC2D2/clusters/contigs.newick > EC2D2/clusters/contigs_tree.txt
+        
+[Wed Nov 30 15:17:29 2022]
+Error in rule cluster:
+    jobid: 0
+    input: EC2D2/assemblies/assembly_01.fasta, EC2D2/assemblies/assembly_02.fasta, EC2D2/assemblies/assembly_03.fasta, EC2D2/assemblies/assembly_04.fasta, EC2D2/assemblies/assembly_05.fasta, EC2D2/assemblies/assembly_06.fasta, EC2D2/assemblies/assembly_07.fasta, EC2D2/assemblies/assembly_08.fasta, EC2D2/assemblies/assembly_09.fasta, EC2D2/assemblies/assembly_10.fasta, EC2D2/assemblies/assembly_11.fasta, EC2D2/assemblies/assembly_12.fasta, EC2D2/filtered.fastq
+    output: EC2D2/clusters/contigs.newick, EC2D2/clusters/contigs_tree.txt
+    shell:
+        
+        trycycler cluster --reads EC2D2/filtered.fastq --assemblies EC2D2/assemblies/assembly_01.fasta EC2D2/assemblies/assembly_02.fasta EC2D2/assemblies/assembly_03.fasta EC2D2/assemblies/assembly_04.fasta EC2D2/assemblies/assembly_05.fasta EC2D2/assemblies/assembly_06.fasta EC2D2/assemblies/assembly_07.fasta EC2D2/assemblies/assembly_08.fasta EC2D2/assemblies/assembly_09.fasta EC2D2/assemblies/assembly_10.fasta EC2D2/assemblies/assembly_11.fasta EC2D2/assemblies/assembly_12.fasta         --out_dir EC2D2/clusters         --min_contig_len 5000 --threads 4
+        nw_display EC2D2/clusters/contigs.newick > EC2D2/clusters/contigs_tree.txt
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Removing output files of failed job cluster since they might be corrupted:
+EC2D2/clusters/contigs.newick, EC2D2/clusters/contigs_tree.txt
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2022-11-30T151659.613731.snakemake.log

@@ -1,0 +1,45 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=10
+Job stats:
+job        count    min threads    max threads
+-------  -------  -------------  -------------
+cluster        1              4              4
+follow         1              1              1
+total          2              1              4
+
+Select jobs to execute...
+
+[Wed Nov 30 13:26:21 2022]
+Job 1: 
+        Clustering the multiple assemblies.
+        
+Reason: Code has changed since last execution; Params have changed since last execution
+
+[Wed Nov 30 13:26:51 2022]
+Finished job 1.
+1 of 2 steps (50%) done
+Select jobs to execute...
+
+[Wed Nov 30 13:26:51 2022]
+Job 0: 
+        Checking whether there is need of human intervention.
+        
+Reason: Input files updated by another job: EC2D2/clusters, EC2D2/clusters/contigs.newick
+
+[Wed Nov 30 13:26:51 2022]
+Error in rule follow:
+    jobid: 0
+    input: EC2D2/clusters, EC2D2/clusters/contigs.newick
+    output: EC2D2/clusters/validated.txt
+    shell:
+        
+        python snakecommands.py check-contigs EC2D2/clusters EC2D2/clusters/contigs.newick 0.005
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2022-11-30T132621.328544.snakemake.log

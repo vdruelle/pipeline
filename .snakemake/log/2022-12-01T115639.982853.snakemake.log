@@ -1,0 +1,35 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Provided resources: mem_mb=10
+Job stats:
+job          count    min threads    max threads
+---------  -------  -------------  -------------
+all              1              1              1
+reconcile        1              4              4
+total            2              1              4
+
+Select jobs to execute...
+
+[Thu Dec  1 11:56:40 2022]
+Job 1: 
+        Reconciling the sub assemblies. 
+        Human intervention is needed after this step to judge whether to keep or remove some contigs.
+        
+Reason: Code has changed since last execution
+
+Terminating processes on user request, this might take some time.
+[Thu Dec  1 11:56:42 2022]
+Error in rule reconcile:
+    jobid: 1
+    input: EC2D2/clusters/cluster_001, EC2D2/filtered.fastq
+    output: EC2D2/clusters/cluster_001/2_all_seqs.fasta, EC2D2/clusters/Snakesecond.log
+    shell:
+        
+        trycycler reconcile --reads EC2D2/filtered.fastq --cluster_dir EC2D2/clusters/cluster_001 --threads 4         | grep *
+        # > EC2D2/clusters/Snakesecond.log 2>&1 || echo process failed >> EC2D2/clusters/Snakesecond.log
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Complete log: .snakemake/log/2022-12-01T115639.982853.snakemake.log

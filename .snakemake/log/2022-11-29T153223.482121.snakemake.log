@@ -1,0 +1,135 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Job stats:
+job               count    min threads    max threads
+--------------  -------  -------------  -------------
+assemble_flye         4              4              4
+assemble_mini         4              4              4
+assemble_raven        2              4              4
+cluster               1              1              1
+total                11              1              4
+
+Select jobs to execute...
+
+[Tue Nov 29 15:32:23 2022]
+Job 11: 
+        Assembling EC2D2/read_subsets/sample_09.fastq with miniasm.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_09.fasta; Code has changed since last execution; Params have changed since last execution
+
+[Tue Nov 29 15:32:38 2022]
+Finished job 11.
+1 of 11 steps (9%) done
+Select jobs to execute...
+
+[Tue Nov 29 15:32:38 2022]
+Job 5: 
+        Assembling EC2D2/read_subsets/sample_03.fastq with flye.        
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_03.fasta
+
+[Tue Nov 29 15:34:24 2022]
+Finished job 5.
+2 of 11 steps (18%) done
+Select jobs to execute...
+
+[Tue Nov 29 15:34:24 2022]
+Job 12: 
+        Assembling EC2D2/read_subsets/sample_10.fastq with miniasm.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_10.fasta; Code has changed since last execution; Params have changed since last execution
+
+[Tue Nov 29 15:34:40 2022]
+Finished job 12.
+3 of 11 steps (27%) done
+Select jobs to execute...
+
+[Tue Nov 29 15:34:40 2022]
+Job 10: 
+        Assembling EC2D2/read_subsets/sample_08.fastq with raven.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_08.fasta; Code has changed since last execution; Params have changed since last execution
+
+[Tue Nov 29 15:34:47 2022]
+Finished job 10.
+4 of 11 steps (36%) done
+Select jobs to execute...
+
+[Tue Nov 29 15:34:47 2022]
+Job 8: 
+        Assembling EC2D2/read_subsets/sample_06.fastq with raven.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_06.fasta; Code has changed since last execution; Params have changed since last execution
+
+[Tue Nov 29 15:34:53 2022]
+Finished job 8.
+5 of 11 steps (45%) done
+Select jobs to execute...
+
+[Tue Nov 29 15:34:53 2022]
+Job 6: 
+        Assembling EC2D2/read_subsets/sample_04.fastq with flye.        
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_04.fasta
+
+[Tue Nov 29 15:36:35 2022]
+Finished job 6.
+6 of 11 steps (55%) done
+Select jobs to execute...
+
+[Tue Nov 29 15:36:35 2022]
+Job 1: 
+        Assembling EC2D2/read_subsets/sample_01.fastq with flye.        
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_01.fasta
+
+[Tue Nov 29 15:38:21 2022]
+Finished job 1.
+7 of 11 steps (64%) done
+Select jobs to execute...
+
+[Tue Nov 29 15:38:21 2022]
+Job 14: 
+        Assembling EC2D2/read_subsets/sample_12.fastq with miniasm.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_12.fasta; Code has changed since last execution; Params have changed since last execution
+
+[Tue Nov 29 15:38:36 2022]
+Finished job 14.
+8 of 11 steps (73%) done
+Select jobs to execute...
+
+[Tue Nov 29 15:38:36 2022]
+Job 4: 
+        Assembling EC2D2/read_subsets/sample_02.fastq with flye.        
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_02.fasta; Code has changed since last execution; Params have changed since last execution
+
+[Tue Nov 29 15:40:24 2022]
+Finished job 4.
+9 of 11 steps (82%) done
+Select jobs to execute...
+
+[Tue Nov 29 15:40:24 2022]
+Job 13: 
+        Assembling EC2D2/read_subsets/sample_11.fastq with miniasm.
+        
+Reason: Missing output files: EC2D2/assemblies/assembly_11.fasta; Code has changed since last execution; Params have changed since last execution
+
+[Tue Nov 29 15:40:39 2022]
+Finished job 13.
+10 of 11 steps (91%) done
+Select jobs to execute...
+
+[Tue Nov 29 15:40:39 2022]
+Job 0: 
+        TODO
+        
+Reason: Input files updated by another job: EC2D2/assemblies/assembly_09.fasta, EC2D2/assemblies/assembly_02.fasta, EC2D2/assemblies/assembly_10.fasta, EC2D2/assemblies/assembly_01.fasta, EC2D2/assemblies/assembly_12.fasta, EC2D2/assemblies/assembly_03.fasta, EC2D2/assemblies/assembly_11.fasta, EC2D2/assemblies/assembly_04.fasta, EC2D2/assemblies/assembly_06.fasta, EC2D2/assemblies/assembly_08.fasta
+
+[Tue Nov 29 15:41:07 2022]
+Finished job 0.
+11 of 11 steps (100%) done
+Complete log: .snakemake/log/2022-11-29T153223.482121.snakemake.log
