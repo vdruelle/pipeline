@@ -1,6 +1,7 @@
 # Pipeline to make the assemblies from all the files in input folder
 # It is rigid for now, i.e. it assumes that 12 sub assemblies and only one contig are generated in all cases
 
+
 def get_phage_names(input_folder):
     "Returns a list of the file names present in the input_folder."
     phage_names = os.listdir(input_folder)
@@ -10,13 +11,17 @@ def get_phage_names(input_folder):
 
     return phage_names
 
+
 IDs = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
 NAMES = get_phage_names("input")
 
-rule all:
-    input: 
-        trees = expand("{phage_name}/clusters/contigs_tree.txt", phage_name = NAMES),
-        logs = expand("{phage_name}/clusters/Snakefirst.log", phage_name = NAMES)
+
+
+# rule all:
+#     input:
+#         trees=expand("{phage_name}/clusters/contigs_tree.txt", phage_name=NAMES),
+#         logs=expand("{phage_name}/clusters/Snakefirst.log", phage_name=NAMES),
+
 
 rule convert_gz:
     message:
@@ -24,13 +29,14 @@ rule convert_gz:
         Converting {input} to zip version for compatibility with the rest of the pipeline.
         """
     input:
-        raw_reads_uncompressed = "input/{phage_name}.fastq"
+        raw_reads_uncompressed="input/{phage_name}.fastq",
     output:
-        raw_reads_compressed = "input/{phage_name}.fastq.gz"
+        raw_reads_compressed="input/{phage_name}.fastq.gz",
     shell:
         """
         gzip {input.raw_reads_uncompressed}
         """
+
 
 rule filtlong:
     message:
@@ -38,18 +44,18 @@ rule filtlong:
         Running filtlong on {input.raw_reads}
         """
     input:
-        raw_reads = "input/{phage_name}.fastq.gz"
-    
+        raw_reads="input/{phage_name}.fastq.gz",
     output:
-        filtered_reads = "{phage_name}/filtered.fastq"
+        filtered_reads="{phage_name}/filtered.fastq",
     params:
-        min_length = 5000,
-        keep_percent = 95
+        min_length=5000,
+        keep_percent=95,
     shell:
         """
         filtlong --min_length {params.min_length} --keep_percent {params.keep_percent} \
         {input.raw_reads} > {output.filtered_reads}
         """
+
 
 rule subsample:
     message:
@@ -57,17 +63,18 @@ rule subsample:
         Subsampling {input.reads} in 12 parts.
         """
     input:
-        reads = rules.filtlong.output.filtered_reads
+        reads=rules.filtlong.output.filtered_reads,
     output:
-        out_dir = directory("{phage_name}/read_subsets"),
-        subsampled = expand("{phage_name}/read_subsets/sample_{id}.fastq", 
-                         id=IDs,
-                         allow_missing=True)
+        out_dir=directory("{phage_name}/read_subsets"),
+        subsampled=expand(
+            "{phage_name}/read_subsets/sample_{id}.fastq", id=IDs, allow_missing=True
+        ),
     threads: 4
     shell:
         """
         trycycler subsample --reads {input.reads} --out_dir {output.out_dir} --threads {threads}
         """
+
 
 rule assemble_flye:
     message:
@@ -75,16 +82,16 @@ rule assemble_flye:
         Assembling {input.subsampled} with flye.        
         """
     wildcard_constraints:
-        id = "(01|02|03|04)"
+        id="(01|02|03|04)",
     input:
-        subsampled = "{phage_name}/read_subsets/sample_{id}.fastq"
+        subsampled="{phage_name}/read_subsets/sample_{id}.fastq",
     output:
-        assembly = "{phage_name}/assemblies/assembly_{id}.fasta"
+        assembly="{phage_name}/assemblies/assembly_{id}.fasta",
     threads: 4
     resources:
-        mem_mb = 8
+        mem_mb=8,
     params:
-        tmp_dir = directory("{phage_name}/assemblies/assembly_{id}")
+        tmp_dir=directory("{phage_name}/assemblies/assembly_{id}"),
     shell:
         """
         flye --nano-raw {input.subsampled} --threads {threads} --out-dir {params.tmp_dir}
@@ -92,17 +99,18 @@ rule assemble_flye:
         rm -r {params.tmp_dir} 
         """
 
+
 rule assemble_raven:
     message:
         """
         Assembling {input.subsampled} with raven.
         """
     wildcard_constraints:
-        id = "(05|06|07|08)"
+        id="(05|06|07|08)",
     input:
-        subsampled = "{phage_name}/read_subsets/sample_{id}.fastq"
+        subsampled="{phage_name}/read_subsets/sample_{id}.fastq",
     output:
-        assembly = "{phage_name}/assemblies/assembly_{id}.fasta"
+        assembly="{phage_name}/assemblies/assembly_{id}.fasta",
     threads: 2
     shell:
         """
@@ -110,20 +118,21 @@ rule assemble_raven:
         rm raven.cereal
         """
 
+
 rule assemble_mini:
     message:
         """
         Assembling {input.subsampled} with miniasm.
         """
     wildcard_constraints:
-        id = "(09|10|11|12)"
+        id="(09|10|11|12)",
     input:
-        subsampled = "{phage_name}/read_subsets/sample_{id}.fastq"
+        subsampled="{phage_name}/read_subsets/sample_{id}.fastq",
     output:
-        assembly = "{phage_name}/assemblies/assembly_{id}.fasta"
+        assembly="{phage_name}/assemblies/assembly_{id}.fasta",
     threads: 4
     params:
-        tmp_dir = directory("{phage_name}/assembly_{id}")
+        tmp_dir=directory("{phage_name}/assembly_{id}"),
     shell:
         """
         mkdir {params.tmp_dir}
@@ -136,25 +145,28 @@ rule assemble_mini:
         rm -r {params.tmp_dir}
         """
 
-rule cluster:
-    message:
-        """
-        Clustering the multiple assemblies.
-        """
+
+checkpoint cluster:
     input:
-        assemblies = expand("{phage_name}/assemblies/assembly_{id}.fasta", id=IDs, allow_missing=True),
-        reads = rules.filtlong.output.filtered_reads
+        assemblies=expand(
+            "{phage_name}/assemblies/assembly_{id}.fasta", id=IDs, allow_missing=True
+        ),
+        reads=rules.filtlong.output.filtered_reads,
     output:
-        nwk_tree = "{phage_name}/clusters/contigs.newick"
+        nwk_tree="{phage_name}/clusters/contigs.newick",
+        clusters_dir="{phage_name}/clusters/clusters_dir",
     threads: 4
     params:
-        min_contig_len = 5000
+        min_contig_len=5000,
     shell:
         """
         trycycler cluster --reads {input.reads} --assemblies {input.assemblies} \
         --out_dir {wildcards.phage_name}/clusters \
         --min_contig_len {params.min_contig_len} --threads {threads}
+        mkdir {output.clusters_dir}
+        mv -r cluster_* {output.clusters_dir}
         """
+
 
 rule cluster_to_txt:
     message:
@@ -162,14 +174,15 @@ rule cluster_to_txt:
         Converting {input.nwk_tree} to {output.txt_tree} for easier viewing.
         """
     input:
-        nwk_tree = rules.cluster.output.nwk_tree
+        nwk_tree="{phage_name}/clusters/contigs.newick",
     output:
-        txt_tree = "{phage_name}/clusters/contigs_tree.txt"
+        txt_tree="{phage_name}/clusters/contigs_tree.txt",
     threads: 1
     shell:
         """
         python snakecommands.py newick-to-txt {input.nwk_tree} {wildcards.phage_name}/clusters {output.txt_tree}
         """
+
 
 rule check_contigs:
     message:
@@ -177,13 +190,45 @@ rule check_contigs:
         Checking whether there is need of human intervention.
         """
     input:
-        nwk_tree = rules.cluster.output.nwk_tree
+        nwk_tree="{phage_name}/clusters/contigs.newick",
     output:
-        logfile = "{phage_name}/clusters/Snakefirst.log"
+        logfile="{phage_name}/clusters/Snakefirst.log",
     threads: 1
     params:
-        max_length = 0.005
+        max_length=0.005,
     shell:
         """
         python snakecommands.py check-contigs {wildcards.phage_name}/clusters {input.nwk_tree} {output.logfile} {params.max_length}
         """
+
+
+rule reconcile:
+    message:
+        """
+        Reconciling the sub assemblies. 
+        Human intervention is needed after this step to judge whether to keep or remove some contigs.
+        """
+    input:
+        cluster_dir = "{phage_name}/clusters/clusters_dir/cluster_{cluster_no}",
+        reads = "{phage_name}/filtered.fastq"
+    output:
+        logfile = "{phage_name}/clusters/clusters_dir/cluster_{cluster_no}/reconcile.log"
+    threads: 4
+    shell:
+        """
+        trycycler reconcile --reads {input.reads} --cluster_dir {input.cluster_dir} --threads {threads} \
+        > {output.logfile} 2>&1 \
+        || echo process failed >> {output.logfile}
+        sed -i -r "s/\x1B\[([0-9]{{1,2}}(;[0-9]{{1,2}})?)?[mGK]//g" {output.logfile}
+        """
+
+def aggregate_input(wildcards):
+    checkpoint_output = checkpoints.cluster.get(**wildcards).output.clusters_dir
+    return expand("EC2D2/clusters/clusters_dir/cluster_{cluster_no}/reconcile.log",
+                cluster_no=glob_wildcards(os.path.join(checkpoint_output, "cluster_{i}")).i)
+
+
+rule all:
+    input: aggregate_input
+    
+    #expand("{phage_name}/clusters/Snakesecond.log", phage_name=NAMES)
