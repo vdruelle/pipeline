@@ -1,7 +1,0 @@
-Building DAG of jobs...
-MissingInputException in rule cluster_to_txt  in line 145 of /home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakefirst:
-Missing input files for rule cluster_to_txt:
-    output: EC2D2/clusters/contigs_tree.txt
-    wildcards: phage_name=EC2D2
-    affected files:
-        EC2D2/clusters

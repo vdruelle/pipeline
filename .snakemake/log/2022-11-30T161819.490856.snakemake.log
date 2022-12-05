@@ -1,3 +1,0 @@
-NameError in line 6 of /home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakefirst:
-name 'NAMES' is not defined
-  File "/home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakefirst", line 6, in <module>

@@ -1,7 +1,0 @@
-Building DAG of jobs...
-MissingInputException in rule convert_gz  in line 16 of /home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakefirst:
-Missing input files for rule convert_gz:
-    output: input/EC2D2.fastq.gz.fastq.gz
-    wildcards: phage_name=EC2D2.fastq.gz
-    affected files:
-        input/EC2D2.fastq.gz.fastq

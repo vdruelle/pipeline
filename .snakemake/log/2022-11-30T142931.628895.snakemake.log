@@ -1,7 +1,0 @@
-Building DAG of jobs...
-MissingInputException in rule partition  in line 16 of /home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakethird:
-Missing input files for rule partition:
-    output: EC2D2/clusters/cluster_001/4_reads.fastq
-    wildcards: phage_name=EC2D2, id=001
-    affected files:
-        EC2D2/clusters/cluster_*

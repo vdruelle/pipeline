@@ -1,4 +1,0 @@
-FileNotFoundError in line 18 of /home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakesecond:
-[Errno 2] No such file or directory: '{wildcards.phage_name}/clusters'
-  File "/home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakesecond", line 33, in <module>
-  File "/home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakesecond", line 18, in get_ids

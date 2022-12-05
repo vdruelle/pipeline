@@ -1,7 +1,0 @@
-Building DAG of jobs...
-MissingInputException in rule check_contigs  in line 146 of /home/valentin/Desktop/richardLab/scicore_local/PhD/Phage_project/Sequencing/trycycler/pipeline/Snakefirst:
-Missing input files for rule check_contigs:
-    output: EC2D2/clusters/.validated.txt
-    wildcards: phage_name=EC2D2
-    affected files:
-        EC2D2/clusters
