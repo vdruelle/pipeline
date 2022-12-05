@@ -15,8 +15,8 @@ NAMES = get_phage_names("input")
 
 rule all:
     input: 
-        trees = expand("{phage_name}/clusters/contigs_tree.txt", phage_name = NAMES),
-        logs = expand("{phage_name}/clusters/Snakefirst.log", phage_name = NAMES)
+        trees = expand("output/{phage_name}/clusters/contigs_tree.txt", phage_name = NAMES),
+        logs = expand("output/{phage_name}/clusters/Snakefirst.log", phage_name = NAMES)
 
 rule convert_gz:
     message:
@@ -41,7 +41,7 @@ rule filtlong:
         raw_reads = "input/{phage_name}.fastq.gz"
     
     output:
-        filtered_reads = "{phage_name}/filtered.fastq"
+        filtered_reads = "output/{phage_name}/filtered.fastq"
     params:
         min_length = 5000,
         keep_percent = 95
@@ -59,8 +59,8 @@ rule subsample:
     input:
         reads = rules.filtlong.output.filtered_reads
     output:
-        out_dir = directory("{phage_name}/read_subsets"),
-        subsampled = expand("{phage_name}/read_subsets/sample_{id}.fastq", 
+        out_dir = directory("output/{phage_name}/read_subsets"),
+        subsampled = expand("output/{phage_name}/read_subsets/sample_{id}.fastq", 
                          id=IDs,
                          allow_missing=True)
     threads: 4
@@ -77,14 +77,14 @@ rule assemble_flye:
     wildcard_constraints:
         id = "(01|02|03|04)"
     input:
-        subsampled = "{phage_name}/read_subsets/sample_{id}.fastq"
+        subsampled = "output/{phage_name}/read_subsets/sample_{id}.fastq"
     output:
-        assembly = "{phage_name}/assemblies/assembly_{id}.fasta"
+        assembly = "output/{phage_name}/assemblies/assembly_{id}.fasta"
     threads: 4
     resources:
         mem_mb = 8
     params:
-        tmp_dir = directory("{phage_name}/assemblies/assembly_{id}")
+        tmp_dir = directory("output/{phage_name}/assemblies/assembly_{id}")
     shell:
         """
         flye --nano-raw {input.subsampled} --threads {threads} --out-dir {params.tmp_dir}
@@ -100,9 +100,9 @@ rule assemble_raven:
     wildcard_constraints:
         id = "(05|06|07|08)"
     input:
-        subsampled = "{phage_name}/read_subsets/sample_{id}.fastq"
+        subsampled = "output/{phage_name}/read_subsets/sample_{id}.fastq"
     output:
-        assembly = "{phage_name}/assemblies/assembly_{id}.fasta"
+        assembly = "output/{phage_name}/assemblies/assembly_{id}.fasta"
     threads: 2
     shell:
         """
@@ -118,12 +118,12 @@ rule assemble_mini:
     wildcard_constraints:
         id = "(09|10|11|12)"
     input:
-        subsampled = "{phage_name}/read_subsets/sample_{id}.fastq"
+        subsampled = "output/{phage_name}/read_subsets/sample_{id}.fastq"
     output:
-        assembly = "{phage_name}/assemblies/assembly_{id}.fasta"
+        assembly = "output/{phage_name}/assemblies/assembly_{id}.fasta"
     threads: 4
     params:
-        tmp_dir = directory("{phage_name}/assembly_{id}")
+        tmp_dir = directory("output/{phage_name}/assembly_{id}")
     shell:
         """
         mkdir {params.tmp_dir}
@@ -142,10 +142,10 @@ rule cluster:
         Clustering the multiple assemblies.
         """
     input:
-        assemblies = expand("{phage_name}/assemblies/assembly_{id}.fasta", id=IDs, allow_missing=True),
+        assemblies = expand("output/{phage_name}/assemblies/assembly_{id}.fasta", id=IDs, allow_missing=True),
         reads = rules.filtlong.output.filtered_reads
     output:
-        nwk_tree = "{phage_name}/clusters/contigs.newick"
+        nwk_tree = "output/{phage_name}/clusters/contigs.newick"
     threads: 4
     params:
         min_contig_len = 5000
@@ -164,7 +164,7 @@ rule cluster_to_txt:
     input:
         nwk_tree = rules.cluster.output.nwk_tree
     output:
-        txt_tree = "{phage_name}/clusters/contigs_tree.txt"
+        txt_tree = "output/{phage_name}/clusters/contigs_tree.txt"
     threads: 1
     shell:
         """
@@ -179,7 +179,7 @@ rule check_contigs:
     input:
         nwk_tree = rules.cluster.output.nwk_tree
     output:
-        logfile = "{phage_name}/clusters/Snakefirst.log"
+        logfile = "output/{phage_name}/clusters/Snakefirst.log"
     threads: 1
     params:
         max_length = 0.005

@@ -15,25 +15,25 @@ NAMES = get_phage_names("input")
 
 
 rule all:
-    input: expand("{phage_name}/clusters/cluster_001/2_all_seqs.fasta", phage_name=NAMES)
+    input: expand("output/{phage_name}/clusters/cluster_001/2_all_seqs.fasta", phage_name=NAMES)
 
 rule reconcile:
     message:
         """
-        Reconciling the sub assemblies. 
+        Reconciling the sub assemblies for {input.cluster_dir}. 
         Human intervention is needed after this step to judge whether to keep or remove some contigs.
         """
     input:
-        cluster_dir = "{phage_name}/clusters/cluster_001",
-        reads = "{phage_name}/filtered.fastq"
+        cluster_dir = "output/{phage_name}/clusters/cluster_001",
+        reads = "output/{phage_name}/filtered.fastq"
     output:
-        all_seq = "{phage_name}/clusters/cluster_001/2_all_seqs.fasta",
-        logfile = "{phage_name}/clusters/Snakesecond.log"
+        all_seq = "output/{phage_name}/clusters/cluster_001/2_all_seqs.fasta",
+    log:
+        logfile = "output/{phage_name}/clusters/Snakesecond.log"
     threads: 4
     shell:
         """
-        trycycler reconcile --reads {input.reads} --cluster_dir {input.cluster_dir} --threads {threads} \
-        > {output.logfile} 2>&1 \
-        || echo process failed >> {output.logfile}
-        sed -i -r "s/\x1B\[([0-9]{{1,2}}(;[0-9]{{1,2}})?)?[mGK]//g" {output.logfile}
+        trycycler reconcile --reads {input.reads} --cluster_dir {input.cluster_dir} --threads {threads} 2>&1 \
+        | tee {log.logfile}
+        sed -i -r "s/\x1B\[([0-9]{{1,2}}(;[0-9]{{1,2}})?)?[mGK]//g" {log.logfile}
         """

@@ -10,7 +10,7 @@ def get_phage_names(input_folder):
 NAMES = get_phage_names("input")
 
 rule all:
-    input: expand("{phage_name}/clusters/cluster_001/8_polished_consensus.fasta", phage_name = NAMES)
+    input: expand("output/{phage_name}/clusters/cluster_001/8_polished_consensus.fasta", phage_name = NAMES)
 
 rule msa:
     message:
@@ -18,9 +18,9 @@ rule msa:
         Making multiple sequence alignment of the clusters.
         """
     input:
-        cluster_dir = "{phage_name}/clusters/cluster_{id}"
+        cluster_dir = "output/{phage_name}/clusters/cluster_{id}"
     output:
-        msa = "{phage_name}/clusters/cluster_{id}/3_msa.fasta"
+        msa = "output/{phage_name}/clusters/cluster_{id}/3_msa.fasta"
     threads: 4
     shell:
         """
@@ -33,11 +33,11 @@ rule partition:
         Partinioning reads.
         """
     input:
-        reads = "{phage_name}/filtered.fastq",
-        cluster_dir = "{phage_name}/clusters/cluster_{id}",
+        reads = "output/{phage_name}/filtered.fastq",
+        cluster_dir = "output/{phage_name}/clusters/cluster_{id}",
         msa = rules.msa.output.msa
     output:
-        partitioned = "{phage_name}/clusters/cluster_{id}/4_reads.fastq"
+        partitioned = "output/{phage_name}/clusters/cluster_{id}/4_reads.fastq"
     threads: 4
     shell:
         """
@@ -50,10 +50,10 @@ rule consensus:
         Making consensus for {input.cluster_dir}.
         """
     input:
-        cluster_dir = "{phage_name}/clusters/cluster_{id}",
+        cluster_dir = "output/{phage_name}/clusters/cluster_{id}",
         partitioned = rules.partition.output.partitioned
     output:
-        consensus = "{phage_name}/clusters/cluster_{id}/7_final_consensus.fasta"
+        consensus = "output/{phage_name}/clusters/cluster_{id}/7_final_consensus.fasta"
     threads: 4
     shell:
         """
@@ -70,11 +70,11 @@ rule polish:
         consensus = rules.consensus.output.consensus,
         reads = rules.partition.input.reads
     output:
-        consensus = "{phage_name}/clusters/cluster_{id}/8_polished_consensus.fasta"
+        consensus = "output/{phage_name}/clusters/cluster_{id}/8_polished_consensus.fasta"
     threads: 2
     params:
         model = "r941_min_fast_g507",
-        tmp_dir = "{phage_name}/clusters/cluster_{id}/medaka"
+        tmp_dir = "output/{phage_name}/clusters/cluster_{id}/medaka"
     shell:
         """
         medaka_consensus -i {input.reads} -d {input.consensus} -o {params.tmp_dir} -m {params.model} -t {threads}

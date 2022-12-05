@@ -1,1 +1,0 @@
-Tree too small for plotting, which means the contig is fine.

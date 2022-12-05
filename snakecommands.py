@@ -22,7 +22,7 @@ def newick_to_txt(newick_tree, clusters_folder, output_name):
         with open(clusters_folder + "/contigs_tree.txt", "w") as f:
                 f.write("Tree too small for plotting, which means the contig is fine.")
     else:
-        os.cmd(f"nw_display {newick_tree} > {output_name}")
+        os.system(f"nw_display {newick_tree} > {output_name}")
 
 
 
