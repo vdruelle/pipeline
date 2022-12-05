@@ -153,7 +153,7 @@ rule cluster:
     shell:
         """
         trycycler cluster --reads {input.reads} --assemblies {input.assemblies} \
-        --out_dir {wildcards.phage_name}/clusters \
+        --out_dir output/{wildcards.phage_name}/clusters \
         --min_contig_len {params.min_contig_len} --threads {threads}
         """
 
@@ -169,7 +169,7 @@ rule cluster_to_txt:
     threads: 1
     shell:
         """
-        python snakecommands.py newick-to-txt {input.nwk_tree} {wildcards.phage_name}/clusters {output.txt_tree}
+        python snakecommands.py newick-to-txt {input.nwk_tree} output/{wildcards.phage_name}/clusters {output.txt_tree}
         """
 
 rule check_contigs:
@@ -186,5 +186,5 @@ rule check_contigs:
         max_length = 0.005
     shell:
         """
-        python snakecommands.py check-contigs {wildcards.phage_name}/clusters {input.nwk_tree} {output.logfile} {params.max_length}
+        python snakecommands.py check-contigs output/{wildcards.phage_name}/clusters {input.nwk_tree} {output.logfile} {params.max_length}
         """
