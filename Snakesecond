@@ -32,9 +32,11 @@ rule reconcile:
     log:
         logfile = "output/{phage_name}/clusters/Snakesecond.log"
     threads: 4
+    params:
+        max_add_seq = 5000
     shell:
         """
-        trycycler reconcile --reads {input.reads} --cluster_dir {input.cluster_dir} --threads {threads} 2>&1 \
-        | tee {log.logfile}
+        trycycler reconcile --reads {input.reads} --cluster_dir {input.cluster_dir} --threads {threads} \
+        --max_add_seq {params.max_add_seq} > {log.logfile} 2>&1
         sed -i -r "s/\x1B\[([0-9]{{1,2}}(;[0-9]{{1,2}})?)?[mGK]//g" {log.logfile}
         """

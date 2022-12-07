@@ -1,0 +1,101 @@
+# To run this properly, one need to add the illumina reference sequence to the folder first
+
+def get_phage_names(input_folder):
+    "Returns a list of the file names present in the input_folder."
+    phage_names = os.listdir(input_folder)
+    phage_names.remove(".gitignore")
+    for ii in range(len(phage_names)):
+        phage_names[ii] = phage_names[ii].replace(".fasta", "")
+        phage_names[ii] = phage_names[ii].replace(".fastq.gz", "")
+
+    return phage_names
+
+
+NAMES = get_phage_names("input")
+
+
+rule all:
+    input:
+        expand(
+            "output/{phage_name}/statistics.txt",
+            phage_name=NAMES,
+        ),
+
+
+rule get_trycycler_result:
+    message:
+        """
+        """
+    input:
+        original="output/{phage_name}/clusters/cluster_001/8_polished_consensus.fasta",
+    output:
+        renamed="output/{phage_name}/{phage_name}_nanopore.fasta",
+    threads: 1
+    shell:
+        """
+        cp {input.original} {output.renamed}
+        """
+
+
+rule combine:
+    message:
+        """
+        Combine {input.illumina} and {input.nanopore} in one fasta.
+        """
+    input:
+        illumina="output/{phage_name}/{phage_name}_illumina.fasta",
+        nanopore=rules.get_trycycler_result.output.renamed,
+    output:
+        combined="output/{phage_name}/{phage_name}_combined.fasta",
+    threads: 1
+    shell:
+        """
+        cat {input.illumina} {input.nanopore} > {output.combined}
+        python snakecommands.py rotate {output.combined}
+        """
+
+
+rule align:
+    message:
+        """
+        Aligning {input.combined} with mafft.
+        """
+    input:
+        combined=rules.combine.output.combined,
+    output:
+        aligned="output/{phage_name}/{phage_name}_aligned.fasta",
+    threads: 4
+    shell:
+        """
+        mafft --auto --thread {threads} {input.combined} > {output.aligned}
+        """
+
+
+rule statistics:
+    message:
+        """
+        Computing quick statistics on {input.alignment}
+        """
+    input:
+        alignment=rules.align.output.aligned,
+    output:
+        statistics="output/{phage_name}/statistics.txt"
+    threads: 1
+    shell:
+        """
+        python snakecommands.py statistics {input.alignment} | tee {output.statistics}
+        """
+
+rule clean:
+    message:
+        """
+        Removing files created by Snakefourth.        
+        """
+    shell:
+        """
+        rm -f output/*/*_aligned.fasta
+        rm -f output/*/*_combined.fasta
+        rm -f output/*/*_nanopore.fasta
+        rm -f output/*/statistics.txt
+
+        """

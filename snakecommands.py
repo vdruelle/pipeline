@@ -1,6 +1,7 @@
 import click
 import os
-from Bio import Phylo
+import numpy as np
+from Bio import Phylo, SeqIO
 
 
 @click.group()
@@ -70,6 +71,62 @@ def check_contigs(clusters_folder, tree_file, output, max_length):
             print("Assemblies are similar enough, you can run the second part of the pipeline.")
             with open(output, "w") as f:
                 f.write("All good, the next par of the pipeline can be run.")
+
+@cli.command()
+@click.argument("combined", type=click.Path(exists=True))
+def rotate(combined):
+    """
+    Rotates the sequence so that the starting point are the same.
+    """
+    records = list(SeqIO.parse(combined,"fasta"))
+    illumina = records[0]
+    nanopore = records[1]
+    nanopore_complement = records[1].reverse_complement()
+
+    klen = 30
+    found_start = False
+    while not found_start:
+        query = illumina.seq[:klen]
+        tmp = nanopore.seq.find(query)
+        tmp2 = nanopore_complement.seq.find(query)
+        if tmp != -1 or tmp2 != -1:
+            if tmp != -1:
+                nanopore.seq = nanopore.seq[tmp:] + nanopore.seq[:tmp]
+            elif tmp2 != -1:
+                print("Nanopore sequence had to be reverse-complemented.")
+                nanopore.seq = nanopore_complement.seq[tmp2:] + nanopore_complement.seq[:tmp2]
+            found_start = True
+            print(f"Nanopore sequence was rotated succesfully with klen={klen}.")
+        else:
+            if klen > 10:
+                klen -= 1
+            else:
+                break
+    
+    if not found_start:
+        print("Nanopore sequence was not rotated succesfully.")
+
+    with open(combined, "w") as f:
+        SeqIO.write([illumina, nanopore], f, "fasta")
+
+
+@cli.command()
+@click.argument("alignment", type=click.Path(exists=True))
+def statistics(alignment):
+    """
+    Compute quick statistics on the accuracy of the nanopore assembly.
+    """
+    records = list(SeqIO.parse(alignment,"fasta"))
+    illumina = np.array(records[0])
+    nanopore = np.array(records[1])
+
+    diff_pos = np.where(illumina != nanopore)[0]
+    nb_diff = diff_pos.shape[0]
+
+    print(f"Sequences differ at {nb_diff} nucleotide positions.")
+    print(f"These posistions are:")
+    print(diff_pos)
+
 
 if __name__ == '__main__':
     cli()

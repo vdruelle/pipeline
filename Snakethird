@@ -55,7 +55,7 @@ rule consensus:
         partitioned = rules.partition.output.partitioned
     output:
         consensus = "output/{phage_name}/clusters/cluster_{id}/7_final_consensus.fasta"
-    threads: 4
+    threads: 8
     shell:
         """
         trycycler consensus --cluster_dir {input.cluster_dir} --threads {threads}
@@ -83,6 +83,6 @@ rule polish:
         rm -r {params.tmp_dir}
         rm -f *.fai
         rm -f *.mmi
-        cp {output.consensus} {wildcards.phage_name}/{wildcards.phage_name}_trycycler.fasta
+        cp {output.consensus} output/{wildcards.phage_name}/{wildcards.phage_name}_trycycler.fasta
         """
 
